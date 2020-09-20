@@ -1,6 +1,6 @@
 #include "Figures.h"
 
-Line::Color::Color(StandartColors color) {
+Color::Color(StandartColors color) {
 	switch (color) {
 		case StandartColors::WHITE:
 		{
@@ -54,96 +54,22 @@ COLORREF Color::GetColorRef() const {
 	return RGB(red, green, blue);
 }
 
-Pen::Pen() {
-	pen = CreatePen(static_cast<int>(Style::SOLID), 1, RGB(255, 255, 255));
+Pen::Pen() : style(Style::SOLID), width(1), color(Color()) {
+	pen = CreatePen(static_cast<int>(style), width, color.GetColorRef());
 }
 
-Pen::Pen(const Style st, const int32_t w, const Color clr) {
-	pen = CreatePen(static_cast<int>(st), w, clr.GetColorRef());
+Pen::Pen(const Style st, const int32_t w, const Color clr)
+	: style(st), width(w), color(clr) {
+	pen = CreatePen(static_cast<int>(style), width, color.GetColorRef());
+}
+
+Pen::Pen(const Style st, const int32_t w, const StandartColors clr) 
+	: style(st), width(w), color(clr) {
+	pen = CreatePen(static_cast<int>(style), width, color.GetColorRef());
 }
 
 void Pen::Select(const HDC hdc) {
 	SelectObject(hdc, pen);
-}
-
-
-Triangle::Triangle() {
-	vertexes[0] = {0, 0};
-	vertexes[1] = {1, 0};
-	vertexes[2] = {0, 1};
-	line = Line();
-	Line::Color tmp = Line::Color(StandartColors::WHITE);
-	brush = CreateSolidBrush(RGB(tmp.red, tmp.green, tmp.blue));
-}
-
-Triangle::Triangle(StandartColors color) {
-	
-	vertexes[0] = { 0, 0 };
-	vertexes[1] = { 1, 0 };
-	vertexes[2] = { 0, 1 };
-	line = Line();
-	line.SetColor(color);
-	Line::Color tmp = Line::Color(color);
-	brush = CreateSolidBrush(RGB(tmp.red, tmp.green, tmp.blue));
-}
-
-Triangle::Triangle(Line::Point* const v, StandartColors color) : vertexes(v){
-	line = Line();
-	line.SetPoints(vertexes[0], vertexes[1]);
-	line.SetColor(color);
-	Line::Color tmp = Line::Color(color);
-	brush = CreateSolidBrush(RGB(tmp.red, tmp.green, tmp.blue));
-}
-
-Triangle::Triangle(const Line::Point& v1, const Line::Point& v2, const Line::Point& v3, StandartColors color) {
-	vertexes[0] = v1;
-	vertexes[1] = v2;
-	vertexes[2] = v3;
-	line = Line();
-	line.SetPoints(vertexes[0], vertexes[1]);
-	line.SetColor(color);
-	Line::Color tmp = Line::Color(color);
-	brush = CreateSolidBrush(RGB(tmp.red, tmp.green, tmp.blue));
-}
-
-Triangle::~Triangle() {
-	delete[] vertexes;
-	DeleteObject(brush);
-}
-
-void Triangle::Draw(const HDC& hdc) {
-	POINT points[3] = {
-		{vertexes[0].x, vertexes[0].y},
-		{vertexes[1].x, vertexes[1].y},
-		{vertexes[2].x, vertexes[2].y},
-	};
-	line.Bind(hdc);
-	SelectObject(hdc, brush);
-	Polygon(hdc, points, 3);
-}
-
-void Triangle::SetLine(Style style, uint32_t width, StandartColors clr) {
-	line.SetPen(style, width, clr);
-}
-
-void Triangle::SetLine(Style style, uint32_t width) {
-	line.SetPen(style, width);
-}
-
-void Triangle::SetColor(StandartColors color) {
-	line.SetColor(color);	
-	Line::Color tmp = Line::Color(color);
-	brush = CreateSolidBrush(RGB(tmp.red, tmp.green, tmp.blue));
-}
-
-void Triangle::SetVertexes(Line::Point* const v) {
-	vertexes = v;
-}
-
-void Triangle::SetVertexes(const Line::Point& v1, const Line::Point& v2, const Line::Point& v3) {
-	vertexes[0] = v1;
-	vertexes[1] = v2;
-	vertexes[2] = v3;
 }
 
 Line::Line() {
@@ -168,5 +94,29 @@ Line::Line(Point* points[], Pen* pn) {
 	entry = points[0];
 	destination = points[1];
 	pen = pn;
+}
+
+Line::Line(const Point start, const Point finish, Style style, int32_t width, StandartColors color) {
+	entry = new Point(start);
+	destination = new Point(finish);
+	pen = new Pen(style, width, color);
+}
+
+Line::Line(Point* start, Point* finish, Style style, int32_t width, StandartColors color) {
+	entry = start;
+	destination = finish;
+	pen = new Pen(style, width, color);
+}
+
+Line::Line(Point* points[], Style style, int32_t width, StandartColors color) {
+	entry = points[0];
+	destination = points[1];
+	pen = new Pen(style, width, color);
+}
+
+void Line::Draw(const HDC hdc) {
+	pen->Select(hdc);
+	MoveToEx(hdc, entry->x, entry->y, nullptr);
+	LineTo(hdc, destination->x, destination->y);
 }
 

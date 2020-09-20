@@ -49,6 +49,7 @@ class Pen {
 public:
 	Pen();
 	Pen(const Style st, const int32_t w, const Color clr);
+	Pen(const Style st, const int32_t w, const StandartColors clr);
 
 	inline void SetStyle(const Style st) { style = st; }
 	inline void SetWidth(const int32_t w) { width = w; }
@@ -67,8 +68,14 @@ public:
 	Line(const Point start, const Point finish, Pen pn = Pen());
 	Line(Point* start, Point* finish, Pen* pn = new Pen());
 	Line(Point* points[], Pen* pn = new Pen());
+	Line(const Point start, const Point finish, Style style = Style::SOLID,
+		 int32_t width = 1, StandartColors color = StandartColors::WHITE);
+	Line(Point* start, Point* finish, Style style = Style::SOLID,
+		 int32_t width = 1, StandartColors color = StandartColors::WHITE);
+	Line(Point* points[], Style style = Style::SOLID,
+		 int32_t width = 1, StandartColors color = StandartColors::WHITE);
 
-
+	void Draw(const HDC hdc);
 private:
 	Point* entry, *destination;
 	Pen* pen;
@@ -76,46 +83,30 @@ private:
 
 class Figure {
 public:
-	virtual void Draw(const HDC& hdc) = 0;
-	virtual void SetLine(Style style, uint32_t width, StandartColors clr) = 0;
-	virtual void SetLine(Style style, uint32_t width) = 0;
-	virtual void SetColor(StandartColors color) = 0;
+
 protected:
-	Line line;
+
 };
 
 class Triangle : public Figure {
 public:
-	Triangle();
-	Triangle(StandartColors color);
-	Triangle(Line::Point* const v, StandartColors color = StandartColors::WHITE);
-	Triangle(const Line::Point& v1, const Line::Point& v2, const Line::Point& v3, StandartColors color = StandartColors::WHITE);
-	~Triangle();
 
-	void Draw(const HDC& hdc) override;
-	void SetLine(Style style, uint32_t width, StandartColors clr) override;
-	void SetLine(Style style, uint32_t width) override;
-	void SetColor(StandartColors color) override;
-	void SetVertexes(Line::Point* const v);
-	void SetVertexes(const Line::Point& v1, const Line::Point& v2, const Line::Point& v3);
 	
 private:
-	Line::Point* vertexes = new Line::Point[3]();
-	HBRUSH brush;
+
 };
 
 class Rect : public Figure {
 public:
 
 private:
-	Line::Point* vertexes = new Line::Point[2]();
+	
 };
 
 class Circle : public Figure {
 public:
 
 private:
-	Line::Point* centre = new Line::Point();
-	uint32_t radius;
+
 };
 

@@ -1,6 +1,6 @@
 #include "Figures.h"
 
-Color::Color(StandartColors color) {
+Color::Color(const StandartColors color) {
 	switch (color) {
 		case StandartColors::WHITE: {
 			red = green = blue = 255;
@@ -90,7 +90,8 @@ void Pen::SetColor(const StandartColors clr) {
 }
 
 void Pen::Select(const HDC hdc) {
-	SelectObject(hdc, pen);
+	if (pen)
+		SelectObject(hdc, pen);
 }
 
 Brush::Brush() {
@@ -102,7 +103,7 @@ Brush::Brush() {
 }
 
 Brush::Brush(const BrushStyle st, const Color clr, 
-			 const HatchTypes hatch_type, HBITMAP bm) {
+			 const HatchTypes hatch_type, const HBITMAP bm) {
 	style = st;
 	color = clr;
 	hatch = hatch_type;
@@ -111,7 +112,7 @@ Brush::Brush(const BrushStyle st, const Color clr,
 }
 
 Brush::Brush(const BrushStyle st, const StandartColors clr,
-			 const HatchTypes hatch_type, HBITMAP bm) {
+			 const HatchTypes hatch_type, const HBITMAP bm) {
 	style = st;
 	color = Color(clr);
 	hatch = hatch_type;
@@ -119,7 +120,8 @@ Brush::Brush(const BrushStyle st, const StandartColors clr,
 	SelectStyle();
 }
 
-void Brush::SetBrushStyle(const BrushStyle st, const HatchTypes hatch_type, HBITMAP bm) {
+void Brush::SetBrushStyle(const BrushStyle st, const HatchTypes hatch_type, 
+						  const HBITMAP bm) {
 	style = st;
 	hatch = hatch_type;
 	bitmap = bm;
@@ -127,7 +129,7 @@ void Brush::SetBrushStyle(const BrushStyle st, const HatchTypes hatch_type, HBIT
 	SelectStyle();
 }
 
-void Brush::SetHatch(HatchTypes hatch_type) {
+void Brush::SetHatch(const HatchTypes hatch_type) {
 	hatch = hatch_type;
 	DeleteObject(brush);
 	SelectStyle();
@@ -203,13 +205,15 @@ Line::Line(const Point start, const Point finish, PenStyle style, int32_t width,
 	pen = new Pen(style, width, color);
 }
 
-Line::Line(Point* start, Point* finish, PenStyle style, int32_t width, StandartColors color) {
+Line::Line(Point* start, Point* finish, const PenStyle style,
+		   const int32_t width, const StandartColors color) {
 	entry = start;
 	destination = finish;
 	pen = new Pen(style, width, color);
 }
 
-Line::Line(Point* points[], PenStyle style, int32_t width, StandartColors color) {
+Line::Line(Point* points[], const PenStyle style,
+		   const int32_t width, const StandartColors color) {
 	entry = points[0];
 	destination = points[1];
 	pen = new Pen(style, width, color);
@@ -234,7 +238,8 @@ Triangle::Triangle() {
 Triangle::Triangle(const Point v1, const Point v2, const Point v3, 
 				   const Color inner, const Color contour, 
 				   const PenStyle pen_style, const int32_t width, 
-				   const BrushStyle brush_style, const HatchTypes hatch_type, HBITMAP bm) {
+				   const BrushStyle brush_style, const HatchTypes hatch_type, 
+				   const HBITMAP bm) {
 	vertexes = new Point[3]{ v1, v2, v3 };
 	pen = new Pen(pen_style, width, contour);
 	brush = new Brush(brush_style, inner, hatch_type, bm);
@@ -243,7 +248,8 @@ Triangle::Triangle(const Point v1, const Point v2, const Point v3,
 Triangle::Triangle(const Point v1, const Point v2, const Point v3, 
 				   const StandartColors inner, const StandartColors contour, 
 				   const PenStyle pen_style, const int32_t width, 
-				   const BrushStyle brush_style, const HatchTypes hatch_type, HBITMAP bm) {
+				   const BrushStyle brush_style, const HatchTypes hatch_type, 
+				   const HBITMAP bm) {
 	vertexes = new Point[3]{ v1, v2, v3 };
 	pen = new Pen(pen_style, width, contour);
 	brush = new Brush(brush_style, inner, hatch_type, bm);
@@ -294,7 +300,8 @@ Rect::Rect() {
 Rect::Rect(const Point left_top, const Point right_bottom, 
 		   const Color inner, const Color contour, 
 		   const PenStyle pen_style, const int32_t width, 
-		   const BrushStyle brush_style, const HatchTypes hatch_type, HBITMAP bm) {
+		   const BrushStyle brush_style, const HatchTypes hatch_type, 
+		   const HBITMAP bm) {
 	vertexes = new Point[2]{
 		left_top,
 		right_bottom
@@ -306,7 +313,8 @@ Rect::Rect(const Point left_top, const Point right_bottom,
 Rect::Rect(const Point left_top, const Point right_bottom, 
 		   const StandartColors inner, const StandartColors contour, 
 		   const PenStyle pen_style, const int32_t width, 
-		   const BrushStyle brush_style, const HatchTypes hatch_type, HBITMAP bm) {
+		   const BrushStyle brush_style, const HatchTypes hatch_type, 
+		   const HBITMAP bm) {
 	vertexes = new Point[2]{
 		left_top,
 		right_bottom
@@ -327,11 +335,79 @@ void Rect::Draw(const HDC hdc) {
 	Rectangle(hdc, vertexes[0].x, vertexes[0].y, vertexes[1].x, vertexes[1].y);
 }
 
-void Rect::SetVertexes(const Point v1, const Point v2, const Point v3) {
+void Rect::SetVertexes(const Point left_top, const Point right_bottom) {
+	vertexes[0] = left_top;
+	vertexes[1] = right_bottom;
 }
 
 void Rect::SetColor(const Color color) {
+	pen->SetColor(color);
+	brush->SetColor(color);
 }
 
 void Rect::SetColor(const StandartColors color) {
+	pen->SetColor(color);
+	brush->SetColor(color);
+}
+
+Circle::Circle() {
+	vertexes = new Point[2]{
+		{0, 0},
+		{100, 100}
+	};
+	pen = new Pen();
+	brush = new Brush();
+}
+
+Circle::Circle(const Point left_top, const Point right_bottom,
+			   const Color inner, const Color contour,
+			   const PenStyle pen_style, const int32_t width,
+			   const BrushStyle brush_style, const HatchTypes hatch_type,
+			   const HBITMAP bm) {
+	vertexes = new Point[2]{
+		left_top,
+		right_bottom
+	};
+	pen = new Pen(pen_style, width, contour);
+	brush = new Brush(brush_style, inner, hatch_type, bm);
+}
+
+Circle::Circle(const Point left_top, const Point right_bottom,
+			   const StandartColors inner, const StandartColors contour,
+			   const PenStyle pen_style, const int32_t width,
+			   const BrushStyle brush_style, const HatchTypes hatch_type,
+			   const HBITMAP bm) {
+	vertexes = new Point[2]{
+		left_top,
+		right_bottom
+	};
+	pen = new Pen(pen_style, width, contour);
+	brush = new Brush(brush_style, inner, hatch_type, bm);
+}
+
+Circle::~Circle() {
+	delete[] vertexes;
+	delete pen;
+	delete brush;
+}
+
+void Circle::Draw(const HDC hdc) {
+	pen->Select(hdc);
+	brush->Select(hdc);
+	Ellipse(hdc, vertexes[0].x, vertexes[0].y, vertexes[1].x, vertexes[1].y);
+}
+
+void Circle::SetColor(const Color color) {
+	pen->SetColor(color);
+	brush->SetColor(color);
+}
+
+void Circle::SetColor(const StandartColors color) {
+	pen->SetColor(color);
+	brush->SetColor(color);
+}
+
+void Circle::SetVertexes(const Point left_top, const Point right_bottom) {
+	vertexes[0] = left_top;
+	vertexes[1] = right_bottom;
 }

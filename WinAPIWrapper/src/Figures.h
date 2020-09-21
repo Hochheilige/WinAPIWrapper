@@ -119,7 +119,11 @@ public:
 	Line(Point* points[], PenStyle style = PenStyle::SOLID,
 		 int32_t width = 1, StandartColors color = StandartColors::WHITE);
 
-	void Draw(const HDC hdc);
+	void Draw(const HDC hdc) const;
+	inline void SetColor(const Color color) { pen->SetColor(color); }
+	inline void SetColor(const StandartColors color) { pen->SetColor(color); }
+	inline void SetStyle(const PenStyle style) { pen->SetStyle(style); }
+	inline void SetWidth(const int32_t width) { pen->SetWidth(width); }
 private:
 	Point* entry = nullptr, *destination = nullptr;
 	Pen* pen = nullptr;
@@ -128,6 +132,12 @@ private:
 class Figure {
 public:
 	virtual void Draw(const HDC hdc) = 0;
+	virtual void SetColor(const Color color) = 0;
+	virtual void SetColor(const StandartColors color) = 0;
+	virtual inline void SetContourColor(const Color color) { pen->SetColor(color); }
+	inline inline void SetContourColor(const StandartColors color) { pen->SetColor(color); }
+	inline inline void SetFillColor(const Color color) { brush->SetColor(color); }
+	inline inline void SetFillColor(const StandartColors color) { brush->SetColor(color); }
 protected:
 	Point* vertexes = nullptr;
 	Pen* pen = nullptr;
@@ -137,15 +147,43 @@ protected:
 class Triangle : public Figure {
 public:
 	Triangle();
-
+	Triangle(const Point v1, const Point v2, const Point v3, 
+			 const Color inner = Color(), const Color contour = Color(),
+			 const PenStyle pen_style = PenStyle::SOLID, const int32_t width = 1,
+			 const BrushStyle brush_style = BrushStyle::SOLID, 
+			 const HatchTypes hatch_type = HatchTypes::HORIZONTAL, HBITMAP bm = nullptr);
+	Triangle(const Point v1, const Point v2, const Point v3,
+			 const StandartColors inner = StandartColors::WHITE, 
+			 const StandartColors contour = StandartColors::WHITE,
+			 const PenStyle pen_style = PenStyle::SOLID, const int32_t width = 1,
+			 const BrushStyle brush_style = BrushStyle::SOLID,
+			 const HatchTypes hatch_type = HatchTypes::HORIZONTAL, HBITMAP bm = nullptr);
+	~Triangle();
 	void Draw(const HDC hdc) override;
+	void SetVertexes(const Point v1, const Point v2, const Point v3);
+	void SetColor(const Color color) override;
+	void SetColor(const StandartColors color) override;
 };
 
 class Rect : public Figure {
 public:
-
-private:
-	
+	Rect();
+	Rect(const Point left_top, const Point right_bottom,
+			 const Color inner = Color(), const Color contour = Color(),
+			 const PenStyle pen_style = PenStyle::SOLID, const int32_t width = 1,
+			 const BrushStyle brush_style = BrushStyle::SOLID,
+			 const HatchTypes hatch_type = HatchTypes::HORIZONTAL, HBITMAP bm = nullptr);
+	Rect(const Point left_top, const Point right_bottom,
+			 const StandartColors inner = StandartColors::WHITE,
+			 const StandartColors contour = StandartColors::WHITE,
+			 const PenStyle pen_style = PenStyle::SOLID, const int32_t width = 1,
+			 const BrushStyle brush_style = BrushStyle::SOLID,
+			 const HatchTypes hatch_type = HatchTypes::HORIZONTAL, HBITMAP bm = nullptr);
+	~Rect();
+	void Draw(const HDC hdc) override;
+	void SetVertexes(const Point v1, const Point v2, const Point v3);
+	void SetColor(const Color color) override;
+	void SetColor(const StandartColors color) override;
 };
 
 class Circle : public Figure {

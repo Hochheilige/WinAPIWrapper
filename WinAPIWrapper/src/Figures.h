@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <cmath>
 
 #include "Window.h"
 
@@ -126,6 +127,14 @@ public:
 	inline void SetColor(const StandartColors color) { pen->SetColor(color); }
 	inline void SetStyle(const PenStyle style) { pen->SetStyle(style); }
 	inline void SetWidth(const int32_t width) { pen->SetWidth(width); }
+	inline int32_t GetLength() {
+		return sqrt(
+			pow((destination->x - entry->x), 2) +
+			pow((destination->y - entry->y), 2)
+		);
+	}
+	inline Point GetEntry() { return { entry->x, entry->y }; }
+	inline Point GetDestination() { return { destination->x, destination->y }; }
 private:
 	Point* entry = nullptr, *destination = nullptr;
 	Pen* pen = nullptr;

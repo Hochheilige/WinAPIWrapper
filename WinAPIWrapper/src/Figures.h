@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cstdint>
-#include <vector>
 
 #include "Window.h"
 
@@ -120,6 +119,9 @@ public:
 		 const int32_t width = 1, const StandartColors color = StandartColors::WHITE);
 
 	void Draw(const HDC hdc) const;
+	void SetCoord(const Point start, const Point finish);
+	inline void SetEntry(const Point start) { *entry = start; }
+	inline void SetDestination(const Point finish) { *destination = finish; }
 	inline void SetColor(const Color color) { pen->SetColor(color); }
 	inline void SetColor(const StandartColors color) { pen->SetColor(color); }
 	inline void SetStyle(const PenStyle style) { pen->SetStyle(style); }

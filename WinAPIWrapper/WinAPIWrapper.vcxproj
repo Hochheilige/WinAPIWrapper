@@ -150,6 +150,7 @@
     <ClInclude Include="src\Figures.h" />
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\WinAPIWrapper.h" />
+    <ClInclude Include="header\WinAPIWrapper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

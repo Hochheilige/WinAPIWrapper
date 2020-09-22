@@ -225,6 +225,11 @@ void Line::Draw(const HDC hdc) const {
 	LineTo(hdc, destination->x, destination->y);
 }
 
+void Line::SetCoord(const Point start, const Point finish) {
+	*entry = start;
+	*destination = finish;
+}
+
 Triangle::Triangle() {
 	vertexes = new Point[3]{ 
 		{ 100, 0   },
@@ -411,3 +416,5 @@ void Circle::SetVertexes(const Point left_top, const Point right_bottom) {
 	vertexes[0] = left_top;
 	vertexes[1] = right_bottom;
 }
+
+

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #include <Windows.h>
 
 class Window {
@@ -28,13 +30,6 @@ Window::Window() {
 Window::~Window() {
 	ReleaseDC(hWindow, hDeviceContext);
 }
-
-#pragma once
-
-#include <cstdint>
-#include <vector>
-
-#include "Window.h"
 
 enum class PenStyle {
 	SOLID,
@@ -152,6 +147,9 @@ public:
 		 const int32_t width = 1, const StandartColors color = StandartColors::WHITE);
 
 	void Draw(const HDC hdc) const;
+	void SetCoord(const Point start, const Point finish);
+	inline void SetEntry(const Point start) { *entry = start; }
+	inline void SetDestination(const Point finish) { *destination = finish; }
 	inline void SetColor(const Color color) { pen->SetColor(color); }
 	inline void SetColor(const StandartColors color) { pen->SetColor(color); }
 	inline void SetStyle(const PenStyle style) { pen->SetStyle(style); }
@@ -252,8 +250,6 @@ public:
 	void SetColor(const StandartColors color) override;
 	void SetVertexes(const Point left_top, const Point right_bottom);
 };
-
-#include "Figures.h"
 
 Color::Color(const StandartColors color) {
 	switch (color) {
@@ -490,6 +486,11 @@ void Line::Draw(const HDC hdc) const {
 	pen->Select(hdc);
 	MoveToEx(hdc, entry->x, entry->y, nullptr);
 	LineTo(hdc, destination->x, destination->y);
+}
+
+void Line::SetCoord(const Point start, const Point finish) {
+	*entry = start;
+	*destination = finish;
 }
 
 Triangle::Triangle() {

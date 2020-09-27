@@ -1,5 +1,4 @@
 #include "WinAPIWrapper.h"
-#include <conio.h>
 
 int main() {
 	Window wnd;

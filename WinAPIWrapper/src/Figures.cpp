@@ -89,7 +89,7 @@ void Pen::SetColor(const StandartColors clr) {
 	pen = CreatePen(static_cast<int>(style), width, color.GetColorRef());
 }
 
-void Pen::Select(const HDC hdc) {
+void Pen::Select(const HDC hdc) const {
 	if (pen)
 		SelectObject(hdc, pen);
 }
@@ -175,69 +175,41 @@ void Brush::SelectStyle() {
 	}
 }
 
-Line::Line() {
-	entry = new Point(0, 0);
-	destination = new Point(1, 1);
-	pen = new Pen(PenStyle::SOLID, 1, Color(StandartColors::WHITE));
+Line::Line() 
+	: entry({ 0, 0 }), 
+	  destination({1,1}), 
+	  pen(Pen()){
 }
 
-Line::Line(const Point start, const Point finish, Pen pn) {
-	entry = new Point(start);
-	destination = new Point(finish);
-	pen = new Pen(pn);
+Line::Line(const Point start, const Point finish, Pen pn)
+	: entry(start), destination(finish), pen(pn) {
 }
 
-Line::Line(Point* start, Point* finish, Pen* pn) {
-	entry = start;
-	destination = finish;
-	pen = pn;
-}
-
-Line::Line(Point* points[], Pen* pn) {
-	entry = points[0];
-	destination = points[1];
-	pen = pn;
-}
-
-Line::Line(const Point start, const Point finish, PenStyle style, int32_t width, StandartColors color) {
-	entry = new Point(start);
-	destination = new Point(finish);
-	pen = new Pen(style, width, color);
-}
-
-Line::Line(Point* start, Point* finish, const PenStyle style,
-		   const int32_t width, const StandartColors color) {
-	entry = start;
-	destination = finish;
-	pen = new Pen(style, width, color);
-}
-
-Line::Line(Point* points[], const PenStyle style,
-		   const int32_t width, const StandartColors color) {
-	entry = points[0];
-	destination = points[1];
-	pen = new Pen(style, width, color);
+Line::Line(const Point start, const Point finish, 
+		   PenStyle style, int32_t width, StandartColors color) 
+	: entry(start), destination(finish),
+	  pen({style, width, color}) {
 }
 
 void Line::Draw(const HDC hdc) const {
-	pen->Select(hdc);
-	MoveToEx(hdc, entry->x, entry->y, nullptr);
-	LineTo(hdc, destination->x, destination->y);
+	pen.Select(hdc);
+	MoveToEx(hdc, entry.x, entry.y, nullptr);
+	LineTo(hdc, destination.x, destination.y);
 }
 
 void Line::SetCoord(const Point start, const Point finish) {
-	*entry = start;
-	*destination = finish;
+	entry = start;
+	destination = finish;
 }
 
 Triangle::Triangle() {
-	vertexes = new Point[3]{ 
+	vertexes = { 
 		{ 100, 0   },
 		{ 0  , 100 },
 		{ 100, 100 }
 	};
-	pen = new Pen();
-	brush = new Brush();
+	pen = Pen();
+	brush = Brush();
 }
 
 Triangle::Triangle(const Point v1, const Point v2, const Point v3, 
@@ -245,9 +217,9 @@ Triangle::Triangle(const Point v1, const Point v2, const Point v3,
 				   const PenStyle pen_style, const int32_t width, 
 				   const BrushStyle brush_style, const HatchTypes hatch_type, 
 				   const HBITMAP bm) {
-	vertexes = new Point[3]{ v1, v2, v3 };
-	pen = new Pen(pen_style, width, contour);
-	brush = new Brush(brush_style, inner, hatch_type, bm);
+	vertexes = { v1, v2, v3 };
+	pen = Pen(pen_style, width, contour);
+	brush = Brush(brush_style, inner, hatch_type, bm);
 }
 
 Triangle::Triangle(const Point v1, const Point v2, const Point v3, 
@@ -255,20 +227,14 @@ Triangle::Triangle(const Point v1, const Point v2, const Point v3,
 				   const PenStyle pen_style, const int32_t width, 
 				   const BrushStyle brush_style, const HatchTypes hatch_type, 
 				   const HBITMAP bm) {
-	vertexes = new Point[3]{ v1, v2, v3 };
-	pen = new Pen(pen_style, width, contour);
-	brush = new Brush(brush_style, inner, hatch_type, bm);
-}
-
-Triangle::~Triangle() {
-	delete[] vertexes;
-	delete pen;
-	delete brush;
+	vertexes = { v1, v2, v3 };
+	pen = Pen(pen_style, width, contour);
+	brush = Brush(brush_style, inner, hatch_type, bm);
 }
 
 void Triangle::Draw(const HDC hdc) {
-	pen->Select(hdc);
-	brush->Select(hdc);
+	pen.Select(hdc);
+	brush.Select(hdc);
 	POINT* points = new POINT[3]{
 		{ vertexes[0].x, vertexes[0].y },
 		{ vertexes[1].x, vertexes[1].y },
@@ -284,22 +250,22 @@ void Triangle::SetVertexes(const Point v1, const Point v2, const Point v3) {
 }
 
 void Triangle::SetColor(const Color color) {
-	pen->SetColor(color);
-	brush->SetColor(color);
+	pen.SetColor(color);
+	brush.SetColor(color);
 }
 
 void Triangle::SetColor(const StandartColors color) {
-	pen->SetColor(color);
-	brush->SetColor(color);
+	pen.SetColor(color);
+	brush.SetColor(color);
 }
 
 Rect::Rect() {
-	vertexes = new Point[2]{ 
+	vertexes = { 
 		{0, 0}, 
 		{100, 100} 
 	};
-	pen = new Pen();
-	brush = new Brush();
+	pen = Pen();
+	brush = Brush();
 }
 
 Rect::Rect(const Point left_top, const Point right_bottom, 
@@ -307,12 +273,12 @@ Rect::Rect(const Point left_top, const Point right_bottom,
 		   const PenStyle pen_style, const int32_t width, 
 		   const BrushStyle brush_style, const HatchTypes hatch_type, 
 		   const HBITMAP bm) {
-	vertexes = new Point[2]{
+	vertexes = {
 		left_top,
 		right_bottom
 	};
-	pen = new Pen(pen_style, width, contour);
-	brush = new Brush(brush_style, inner, hatch_type, bm);
+	pen = Pen(pen_style, width, contour);
+	brush = Brush(brush_style, inner, hatch_type, bm);
 }
 
 Rect::Rect(const Point left_top, const Point right_bottom, 
@@ -320,23 +286,17 @@ Rect::Rect(const Point left_top, const Point right_bottom,
 		   const PenStyle pen_style, const int32_t width, 
 		   const BrushStyle brush_style, const HatchTypes hatch_type, 
 		   const HBITMAP bm) {
-	vertexes = new Point[2]{
+	vertexes = {
 		left_top,
 		right_bottom
 	};
-	pen = new Pen(pen_style, width, contour);
-	brush = new Brush(brush_style, inner, hatch_type, bm);
-}
-
-Rect::~Rect() {
-	delete[] vertexes;
-	delete pen;
-	delete brush;
+	pen = Pen(pen_style, width, contour);
+	brush = Brush(brush_style, inner, hatch_type, bm);
 }
 
 void Rect::Draw(const HDC hdc) {
-	pen->Select(hdc);
-	brush->Select(hdc);
+	pen.Select(hdc);
+	brush.Select(hdc);
 	Rectangle(hdc, vertexes[0].x, vertexes[0].y, vertexes[1].x, vertexes[1].y);
 }
 
@@ -346,22 +306,22 @@ void Rect::SetVertexes(const Point left_top, const Point right_bottom) {
 }
 
 void Rect::SetColor(const Color color) {
-	pen->SetColor(color);
-	brush->SetColor(color);
+	pen.SetColor(color);
+	brush.SetColor(color);
 }
 
 void Rect::SetColor(const StandartColors color) {
-	pen->SetColor(color);
-	brush->SetColor(color);
+	pen.SetColor(color);
+	brush.SetColor(color);
 }
 
 Circle::Circle() {
-	vertexes = new Point[2]{
+	vertexes = {
 		{0, 0},
 		{100, 100}
 	};
-	pen = new Pen();
-	brush = new Brush();
+	pen = Pen();
+	brush = Brush();
 }
 
 Circle::Circle(const Point left_top, const Point right_bottom,
@@ -369,12 +329,12 @@ Circle::Circle(const Point left_top, const Point right_bottom,
 			   const PenStyle pen_style, const int32_t width,
 			   const BrushStyle brush_style, const HatchTypes hatch_type,
 			   const HBITMAP bm) {
-	vertexes = new Point[2]{
+	vertexes = {
 		left_top,
 		right_bottom
 	};
-	pen = new Pen(pen_style, width, contour);
-	brush = new Brush(brush_style, inner, hatch_type, bm);
+	pen = Pen(pen_style, width, contour);
+	brush = Brush(brush_style, inner, hatch_type, bm);
 }
 
 Circle::Circle(const Point left_top, const Point right_bottom,
@@ -382,39 +342,31 @@ Circle::Circle(const Point left_top, const Point right_bottom,
 			   const PenStyle pen_style, const int32_t width,
 			   const BrushStyle brush_style, const HatchTypes hatch_type,
 			   const HBITMAP bm) {
-	vertexes = new Point[2]{
+	vertexes = {
 		left_top,
 		right_bottom
 	};
-	pen = new Pen(pen_style, width, contour);
-	brush = new Brush(brush_style, inner, hatch_type, bm);
-}
-
-Circle::~Circle() {
-	delete[] vertexes;
-	delete pen;
-	delete brush;
+	pen = Pen(pen_style, width, contour);
+	brush = Brush(brush_style, inner, hatch_type, bm);
 }
 
 void Circle::Draw(const HDC hdc) {
-	pen->Select(hdc);
-	brush->Select(hdc);
+	pen.Select(hdc);
+	brush.Select(hdc);
 	Ellipse(hdc, vertexes[0].x, vertexes[0].y, vertexes[1].x, vertexes[1].y);
 }
 
 void Circle::SetColor(const Color color) {
-	pen->SetColor(color);
-	brush->SetColor(color);
+	pen.SetColor(color);
+	brush.SetColor(color);
 }
 
 void Circle::SetColor(const StandartColors color) {
-	pen->SetColor(color);
-	brush->SetColor(color);
+	pen.SetColor(color);
+	brush.SetColor(color);
 }
 
 void Circle::SetVertexes(const Point left_top, const Point right_bottom) {
 	vertexes[0] = left_top;
 	vertexes[1] = right_bottom;
 }
-
-

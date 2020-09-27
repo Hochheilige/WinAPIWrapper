@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <cmath>
+#include <vector>
 
 #include "Window.h"
 
@@ -70,7 +71,7 @@ public:
 	void SetWidth(const int32_t w);
 	void SetColor(const Color clr);
 	void SetColor(const StandartColors clr);
-	void Select(const HDC hdc);
+	void Select(const HDC hdc) const;
 private:
 	HPEN pen;
 	PenStyle style;
@@ -110,34 +111,29 @@ class Line {
 public:
 	Line();
 	Line(const Point start, const Point finish, const Pen pn = Pen());
-	Line(Point* start, Point* finish, Pen* pn = new Pen());
-	Line(Point* points[], Pen* pn = new Pen());
 	Line(const Point start, const Point finish, const PenStyle style = PenStyle::SOLID,
 		 const int32_t width = 1, const StandartColors color = StandartColors::WHITE);
-	Line(Point* start, Point* finish, const PenStyle style = PenStyle::SOLID,
-		 const int32_t width = 1, const StandartColors color = StandartColors::WHITE);
-	Line(Point* points[], const PenStyle style = PenStyle::SOLID,
-		 const int32_t width = 1, const StandartColors color = StandartColors::WHITE);
+
 
 	void Draw(const HDC hdc) const;
 	void SetCoord(const Point start, const Point finish);
-	inline void SetEntry(const Point start) { *entry = start; }
-	inline void SetDestination(const Point finish) { *destination = finish; }
-	inline void SetColor(const Color color) { pen->SetColor(color); }
-	inline void SetColor(const StandartColors color) { pen->SetColor(color); }
-	inline void SetStyle(const PenStyle style) { pen->SetStyle(style); }
-	inline void SetWidth(const int32_t width) { pen->SetWidth(width); }
+	inline void SetEntry(const Point start) { entry = start; }
+	inline void SetDestination(const Point finish) { destination = finish; }
+	inline void SetColor(const Color color) { pen.SetColor(color); }
+	inline void SetColor(const StandartColors color) { pen.SetColor(color); }
+	inline void SetStyle(const PenStyle style) { pen.SetStyle(style); }
+	inline void SetWidth(const int32_t width) { pen.SetWidth(width); }
 	inline int32_t GetLength() {
 		return sqrt(
-			pow((destination->x - entry->x), 2) +
-			pow((destination->y - entry->y), 2)
+			pow((destination.x - entry.x), 2) +
+			pow((destination.y - entry.y), 2)
 		);
 	}
-	inline Point GetEntry() { return { entry->x, entry->y }; }
-	inline Point GetDestination() { return { destination->x, destination->y }; }
+	inline Point GetEntry() { return { entry.x, entry.y }; }
+	inline Point GetDestination() { return { destination.x, destination.y }; }
 private:
-	Point* entry = nullptr, *destination = nullptr;
-	Pen* pen = nullptr;
+	Point entry, destination;
+	Pen pen;
 };
 
 class Figure {
@@ -145,20 +141,20 @@ public:
 	virtual void Draw(const HDC hdc) = 0;
 	virtual void SetColor(const Color color) = 0;
 	virtual void SetColor(const StandartColors color) = 0;
-	inline void SetContourColor(const Color color) { pen->SetColor(color); }
-	inline void SetContourColor(const StandartColors color) { pen->SetColor(color); }
-	inline void SetContourStyle(const PenStyle style) { pen->SetStyle(style); }
-	inline void SetContourWidth(const int32_t width) { pen->SetWidth(width); }
-	inline void SetFillColor(const Color color) { brush->SetColor(color); }
-	inline void SetFillColor(const StandartColors color) { brush->SetColor(color); }
+	inline void SetContourColor(const Color color) { pen.SetColor(color); }
+	inline void SetContourColor(const StandartColors color) { pen.SetColor(color); }
+	inline void SetContourStyle(const PenStyle style) { pen.SetStyle(style); }
+	inline void SetContourWidth(const int32_t width) { pen.SetWidth(width); }
+	inline void SetFillColor(const Color color) { brush.SetColor(color); }
+	inline void SetFillColor(const StandartColors color) { brush.SetColor(color); }
 	inline void SetFillStyle(const BrushStyle style, 
 							 const HatchTypes hatch_type = HatchTypes::HORIZONTAL,
-							 const HBITMAP bm = nullptr) { brush->SetBrushStyle(style); }
-	inline void SetFillHatch(const HatchTypes hatch_type) { brush->SetBrushStyle(BrushStyle::HATCH, hatch_type); }
+							 const HBITMAP bm = nullptr) { brush.SetBrushStyle(style); }
+	inline void SetFillHatch(const HatchTypes hatch_type) { brush.SetBrushStyle(BrushStyle::HATCH, hatch_type); }
 protected:
-	Point* vertexes = nullptr;
-	Pen* pen = nullptr;
-	Brush* brush = nullptr;
+	std::vector<Point> vertexes;
+	Pen pen;
+	Brush brush;
 };
 
 class Triangle : public Figure {
@@ -177,7 +173,6 @@ public:
 			 const BrushStyle brush_style = BrushStyle::SOLID,
 			 const HatchTypes hatch_type = HatchTypes::HORIZONTAL, 
 			 const HBITMAP bm = nullptr);
-	~Triangle();
 	void Draw(const HDC hdc) override;
 	void SetColor(const Color color) override;
 	void SetColor(const StandartColors color) override;
@@ -200,7 +195,6 @@ public:
 			 const BrushStyle brush_style = BrushStyle::SOLID,
 			 const HatchTypes hatch_type = HatchTypes::HORIZONTAL, 
 		     const HBITMAP bm = nullptr);
-	~Rect();
 	void Draw(const HDC hdc) override;
 	void SetColor(const Color color) override;
 	void SetColor(const StandartColors color) override;
@@ -223,10 +217,8 @@ public:
 		   const BrushStyle brush_style = BrushStyle::SOLID,
 		   const HatchTypes hatch_type = HatchTypes::HORIZONTAL,
 		   const HBITMAP bm = nullptr);
-	~Circle();
 	void Draw(const HDC hdc) override;
 	void SetColor(const Color color) override;
 	void SetColor(const StandartColors color) override;
 	void SetVertexes(const Point left_top, const Point right_bottom);
 };
-

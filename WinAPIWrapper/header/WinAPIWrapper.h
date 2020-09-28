@@ -186,6 +186,8 @@ public:
 			SelectObject(hdc, pen);
 	}
 
+	PenStyle GetStyle() const { return style; }
+	Color GetColor() const { return color; }
 private:
 	HPEN pen;
 	PenStyle style;
@@ -262,6 +264,7 @@ public:
 			SelectObject(hdc, brush);
 	}
 
+	Color GetColor() { return color; }
 private:
 	HBRUSH brush;
 	BrushStyle style;
@@ -308,9 +311,16 @@ public:
 		pen({ style, width, color }) {
 	}
 
+	Line(const Point start, const Point finish, const PenStyle style = PenStyle::SOLID,
+		 const int32_t width = 1, const Color color = Color())
+		: entry(start), destination(finish),
+		pen({ style, width, color }) {
+	}
+
 	void Draw(const HDC hdc) const {
-		pen.Select(hdc);
+		SelectObject(hdc, GetStockObject(NULL_PEN));
 		MoveToEx(hdc, entry.x, entry.y, nullptr);
+		pen.Select(hdc);
 		LineTo(hdc, destination.x, destination.y);
 	}
 
@@ -333,6 +343,8 @@ public:
 	}
 	inline Point GetEntry() { return { entry.x, entry.y }; }
 	inline Point GetDestination() { return { destination.x, destination.y }; }
+	Color GetColor() const { return pen.GetColor(); }
+	PenStyle GetStyle() const { return pen.GetStyle(); }
 private:
 	Point entry, destination;
 	Pen pen;
@@ -355,6 +367,18 @@ public:
 		brush.SetBrushStyle(style);
 	}
 	inline void SetFillHatch(const HatchTypes hatch_type) { brush.SetBrushStyle(BrushStyle::HATCH, hatch_type); }
+	Point GetCentre() {
+		return {
+			vertexes[0].x + (vertexes[1].x - vertexes[0].x) / 2,
+			vertexes[0].y + (vertexes[1].y - vertexes[0].y) / 2
+		};
+	}
+
+	std::vector<Point> GetPoints() { return vertexes; }
+
+	Color GetContourColor() { return pen.GetColor(); }
+	Color GetFillColor() { return brush.GetColor(); }
+
 protected:
 	std::vector<Point> vertexes;
 	Pen pen;

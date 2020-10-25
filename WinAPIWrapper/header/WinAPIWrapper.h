@@ -426,7 +426,7 @@ public:
 		POINT* points = new POINT[3]{
 			{ vertexes[0].x, vertexes[0].y },
 			{ vertexes[1].x, vertexes[1].y },
-			{ vertexes[2].x, vertexes[2].x }
+			{ vertexes[2].x, vertexes[2].y }
 		};
 		Polygon(hdc, points, 3);
 	}

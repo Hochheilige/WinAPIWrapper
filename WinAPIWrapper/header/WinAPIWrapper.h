@@ -1,26 +1,30 @@
 #pragma once
 
 #include <cstdint>
+#include <iostream>
+#include <string>
 #include <cmath>
 #include <vector>
+#include <utility>
 
 #include <Windows.h>
 
 class Window {
 public:
 	Window() {
-		GetStdHandle(STD_OUTPUT_HANDLE);
+		hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
 		GetConsoleScreenBufferInfo(hStdout, &csbi);
 		hWindow = GetConsoleWindow();
 		hDeviceContext = GetDC(hWindow);
 	}
+
 	~Window() {
 		ReleaseDC(hWindow, hDeviceContext);
 	}
 
 	inline HANDLE GetHandle() { return hStdout; }
 	inline CONSOLE_SCREEN_BUFFER_INFO GetScreenBufferInfo() { return csbi; }
-	inline HWND GetWindow() { return hWindow; }
+	inline HWND& GetWindow() { return hWindow; }
 	inline HDC GetDeviceContext() { return hDeviceContext; }
 private:
 	HANDLE hStdout;
@@ -259,7 +263,7 @@ public:
 		SelectStyle();
 	}
 
-	void Select(const HDC hdc) {
+	void Select(const HDC hdc) const {
 		if (brush)
 			SelectObject(hdc, brush);
 	}
@@ -352,7 +356,7 @@ private:
 
 class Figure {
 public:
-	virtual void Draw(const HDC hdc) = 0;
+	virtual void Draw(const HDC hdc) const = 0;
 	virtual void SetColor(const Color color) = 0;
 	virtual void SetColor(const StandartColors color) = 0;
 	inline void SetContourColor(const Color color) { pen.SetColor(color); }
@@ -420,7 +424,7 @@ public:
 		brush = Brush(brush_style, inner, hatch_type, bm);
 	}
 
-	void Draw(const HDC hdc) {
+	void Draw(const HDC hdc) const {
 		pen.Select(hdc);
 		brush.Select(hdc);
 		POINT* points = new POINT[3]{
@@ -489,7 +493,7 @@ public:
 		brush = Brush(brush_style, inner, hatch_type, bm);
 	}
 
-	void Draw(const HDC hdc) {
+	void Draw(const HDC hdc) const {
 		pen.Select(hdc);
 		brush.Select(hdc);
 		Rectangle(hdc, vertexes[0].x, vertexes[0].y, vertexes[1].x, vertexes[1].y);
@@ -508,6 +512,10 @@ public:
 	void SetColor(const StandartColors color) {
 		pen.SetColor(color);
 		brush.SetColor(color);
+	}
+
+	std::vector<Point> GetVertexes() const {
+		return vertexes;
 	}
 };
 
@@ -551,7 +559,7 @@ public:
 		brush = Brush(brush_style, inner, hatch_type, bm);
 	}
 
-	void Draw(const HDC hdc) {
+	void Draw(const HDC hdc) const {
 		pen.Select(hdc);
 		brush.Select(hdc);
 		Ellipse(hdc, vertexes[0].x, vertexes[0].y, vertexes[1].x, vertexes[1].y);
@@ -571,4 +579,21 @@ public:
 		vertexes[0] = left_top;
 		vertexes[1] = right_bottom;
 	}
+};
+
+class Text {
+public:
+	Text() : text(""), point(Point()) {}
+	
+	Text(const std::string& t, const Point& p) : text(t), point(p) {}
+
+	void Write(const HANDLE handle) const {
+		SetConsoleTextAttribute(handle, 14);
+		COORD coord{ (short)point.x, (short)point.y };
+		SetConsoleCursorPosition(handle, coord);
+		std::cout << text;
+	}
+private:
+	std::string text;
+	Point point;
 };

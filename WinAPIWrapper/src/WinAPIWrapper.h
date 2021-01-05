@@ -4,6 +4,9 @@
 */
 
 #pragma once
-#include "Window.h"
-#include "Figures.h"
+
+#include "Line.h"
+#include "Triangle.h"
+#include "Rect.h"
+#include "Circle.h"
 

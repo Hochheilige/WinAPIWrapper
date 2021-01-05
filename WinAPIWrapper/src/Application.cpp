@@ -1,5 +1,7 @@
 #include "WinAPIWrapper.h"
 
+using namespace Waw;
+
 int main() {
 	Window wnd;
 	Triangle tr({ 50, 200 }, { 650, 200 }, { 350, 100 }, StandartColors::GREEN);
@@ -11,6 +13,6 @@ int main() {
 	Circle circle({ 200, 200 }, {500, 500}, StandartColors::MAGENTA);
 	circle.Draw(wnd.GetDeviceContext());
 	rectangle.Draw(wnd.GetDeviceContext());
-	//Line* line = new Line({100, 100}, {500, 500}, PenStyle::DOT, 1, StandartColors::GREEN);
-	//line->Draw(wnd.GetDeviceContext());
+	Line* line = new Line({100, 100}, {500, 500}, PenStyle::DOT, 1, StandartColors::GREEN);
+	line->Draw(wnd.GetDeviceContext());
 }

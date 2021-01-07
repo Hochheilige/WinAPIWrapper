@@ -1,18 +1,19 @@
 #include "WinAPIWrapper.h"
 
+#include <iostream>
+
 using namespace Waw;
 
 int main() {
 	Window wnd;
-	Triangle tr({ 50, 200 }, { 650, 200 }, { 350, 100 }, StandartColors::GREEN);
+	Triangle tr({ 50, 250 }, { 650, 250 }, { 350, 150 }, StandartColors::GREEN);
 	Rect rectangle({ 300, 300 }, { 400, 400 }, StandartColors::CYAN);
-	tr.Draw(wnd.GetDeviceContext());
 	tr.SetFillHatch(HatchTypes::DIAGCROSS);
 	tr.SetColor(StandartColors::YELLOW);
-	tr.Draw(wnd.GetDeviceContext());
 	Circle circle({ 200, 200 }, {500, 500}, StandartColors::MAGENTA);
-	circle.Draw(wnd.GetDeviceContext());
-	rectangle.Draw(wnd.GetDeviceContext());
-	Line* line = new Line({100, 100}, {500, 500}, PenStyle::DOT, 1, StandartColors::GREEN);
-	line->Draw(wnd.GetDeviceContext());
-}
+	circle.Draw(GetDC(wnd.GetWindow()));
+	tr.Draw(GetDC(wnd.GetWindow()));
+	rectangle.Draw(GetDC(wnd.GetWindow()));
+	Line* line = new Line({500, 420}, {200, 420}, PenStyle::DOT, 6, StandartColors::GREEN);
+	line->Draw(GetDC(wnd.GetWindow()));
+} 

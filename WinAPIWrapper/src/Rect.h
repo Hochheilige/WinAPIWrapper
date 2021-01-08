@@ -21,7 +21,7 @@ namespace Waw {
 			 const HatchTypes hatch_type = HatchTypes::HORIZONTAL,
 			 const HBITMAP bm = nullptr);
 
-		void Draw(const HDC hdc) override;
+		void Draw() const override;
 
 		void SetColor(const Color color) override;
 		void SetColor(const StandartColors color) override;

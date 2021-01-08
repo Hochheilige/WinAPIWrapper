@@ -37,10 +37,13 @@ namespace Waw {
 		brush = Brush(brush_style, inner, hatch_type, bm);
 	}
 
-	void Circle::Draw(const HDC hdc) {
+	void Circle::Draw() const {
+		Window* wnd = Window::GetInstance();
+		HDC hdc = GetDC(wnd->GetWindow());
 		pen.Select(hdc);
 		brush.Select(hdc);
 		Ellipse(hdc, vertexes[0].x, vertexes[0].y, vertexes[1].x, vertexes[1].y);
+		ReleaseDC(wnd->GetWindow(), hdc);
 	}
 
 	void Circle::SetColor(const Color color) {

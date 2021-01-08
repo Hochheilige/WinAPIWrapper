@@ -11,7 +11,7 @@ namespace Waw {
 
 	class Figure {
 	public:
-		virtual void Draw(const HDC hdc) = 0;
+		virtual void Draw() const = 0;
 		virtual void SetColor(const Color color) = 0;
 		virtual void SetColor(const StandartColors color) = 0;
 

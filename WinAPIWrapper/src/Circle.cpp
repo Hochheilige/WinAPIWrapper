@@ -46,16 +46,6 @@ namespace Waw {
 		ReleaseDC(wnd->GetWindow(), hdc);
 	}
 
-	void Circle::SetColor(const Color color) {
-		pen.SetColor(color);
-		brush.SetColor(color);
-	}
-
-	void Circle::SetColor(const StandartColors color) {
-		pen.SetColor(color);
-		brush.SetColor(color);
-	}
-
 	void Circle::SetVertexes(const Point left_top, const Point right_bottom) {
 		vertexes[0] = left_top;
 		vertexes[1] = right_bottom;

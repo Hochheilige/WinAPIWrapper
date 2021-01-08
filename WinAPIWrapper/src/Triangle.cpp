@@ -53,15 +53,4 @@ namespace Waw {
 		vertexes[1] = v2;
 		vertexes[2] = v3;
 	}
-
-	void Triangle::SetColor(const Color color) {
-		pen.SetColor(color);
-		brush.SetColor(color);
-	}
-
-	void Triangle::SetColor(const StandartColors color) {
-		pen.SetColor(color);
-		brush.SetColor(color);
-	}
-
 }

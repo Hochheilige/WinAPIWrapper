@@ -12,8 +12,9 @@ namespace Waw {
 	class Figure {
 	public:
 		virtual void Draw() const = 0;
-		virtual void SetColor(const Color color) = 0;
-		virtual void SetColor(const StandartColors color) = 0;
+
+		void SetColor(const Color color);
+		void SetColor(const StandartColors color);
 
 		inline void SetContourColor(const Color color) { pen.SetColor(color); }
 		inline void SetContourColor(const StandartColors color) { pen.SetColor(color); }

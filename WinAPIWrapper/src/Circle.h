@@ -23,8 +23,6 @@ namespace Waw {
 
 		void Draw() const override;
 
-		void SetColor(const Color color) override;
-		void SetColor(const StandartColors color) override;
 		void SetVertexes(const Point left_top, const Point right_bottom);
 	};
 

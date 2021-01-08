@@ -50,15 +50,4 @@ namespace Waw {
 		vertexes[0] = left_top;
 		vertexes[1] = right_bottom;
 	}
-
-	void Rect::SetColor(const Color color) {
-		pen.SetColor(color);
-		brush.SetColor(color);
-	}
-
-	void Rect::SetColor(const StandartColors color) {
-		pen.SetColor(color);
-		brush.SetColor(color);
-	}
-
 }

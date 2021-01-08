@@ -30,6 +30,10 @@ namespace Waw {
 		}
 		inline void SetFillHatch(const HatchTypes hatch_type) { brush.SetBrushStyle(BrushStyle::HATCH, hatch_type); }
 
+		inline std::vector<Point> GetVertexes() { return vertexes; }
+		inline Pen GetPen() { return pen; }
+		inline Brush GetBrush() { return brush; }
+
 	protected:
 		std::vector<Point> vertexes;
 		Pen pen;

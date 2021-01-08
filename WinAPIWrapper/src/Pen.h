@@ -15,6 +15,7 @@ namespace Waw {
 		void SetColor(const Color clr);
 		void SetColor(const StandartColors clr);
 		void Select(const HDC hdc) const;
+
 	private:
 		HPEN pen;
 		PenStyle style;

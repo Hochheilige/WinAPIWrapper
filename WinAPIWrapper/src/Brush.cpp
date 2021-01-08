@@ -61,7 +61,7 @@ namespace Waw {
 		SelectStyle();
 	}
 
-	void Brush::Select(const HDC hdc) {
+	void Brush::Select(const HDC hdc) const {
 		if (brush)
 			SelectObject(hdc, brush);
 	}

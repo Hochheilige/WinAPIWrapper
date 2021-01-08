@@ -20,12 +20,13 @@ namespace Waw {
 		inline void SetContourColor(const StandartColors color) { pen.SetColor(color); }
 		inline void SetContourStyle(const PenStyle style) { pen.SetStyle(style); }
 		inline void SetContourWidth(const int32_t width) { pen.SetWidth(width); }
+
 		inline void SetFillColor(const Color color) { brush.SetColor(color); }
 		inline void SetFillColor(const StandartColors color) { brush.SetColor(color); }
-		inline void SetFillStyle(const BrushStyle style,
+		inline void SetFillStyle(const BrushStyle style = BrushStyle::SOLID,
 								 const HatchTypes hatch_type = HatchTypes::HORIZONTAL,
 								 const HBITMAP bm = nullptr) {
-			brush.SetBrushStyle(style);
+			brush.SetBrushStyle(style, hatch_type, bm);
 		}
 		inline void SetFillHatch(const HatchTypes hatch_type) { brush.SetBrushStyle(BrushStyle::HATCH, hatch_type); }
 

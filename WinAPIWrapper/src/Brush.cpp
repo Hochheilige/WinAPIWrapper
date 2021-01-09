@@ -43,18 +43,6 @@ namespace Waw {
 		SelectStyle();
 	}
 
-	void Brush::SetColor(const Color clr) {
-		color = clr;
-		DeleteObject(brush);
-		SelectStyle();
-	}
-
-	void Brush::SetColor(const StandartColors clr) {
-		color = Color(clr);
-		DeleteObject(brush);
-		SelectStyle();
-	}
-
 	void Brush::SetBitmap(const HBITMAP bm) {
 		bitmap = bm;
 		DeleteObject(brush);

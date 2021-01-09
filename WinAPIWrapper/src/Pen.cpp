@@ -28,18 +28,6 @@ namespace Waw {
 		pen = CreatePen(static_cast<int>(style), width, color.GetColorRef());
 	}
 
-	void Pen::SetColor(const Color clr) {
-		color = clr;
-		DeleteObject(pen);
-		pen = CreatePen(static_cast<int>(style), width, color.GetColorRef());
-	}
-
-	void Pen::SetColor(const StandartColors clr) {
-		color = Color(clr);
-		DeleteObject(pen);
-		pen = CreatePen(static_cast<int>(style), width, color.GetColorRef());
-	}
-
 	void Pen::Select(const HDC hdc) const {
 		if (pen)
 			SelectObject(hdc, pen);

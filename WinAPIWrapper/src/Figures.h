@@ -13,8 +13,11 @@ namespace Waw {
 	public:
 		virtual void Draw() const = 0;
 
-		void SetColor(const Color color);
-		void SetColor(const StandartColors color);
+		template <typename ColorType>
+		void SetColor(const ColorType color) {
+			pen.SetColor(color);
+			brush.SetColor(color);
+		}
 
 		inline void SetContourColor(const Color color) { pen.SetColor(color); }
 		inline void SetContourColor(const StandartColors color) { pen.SetColor(color); }

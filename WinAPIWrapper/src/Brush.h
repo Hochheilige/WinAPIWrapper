@@ -17,10 +17,16 @@ namespace Waw {
 		void SetBrushStyle(const BrushStyle st,
 						   const HatchTypes hatch_type = HatchTypes::HORIZONTAL,
 						   const HBITMAP bm = nullptr);
+
 		void SetHatch(const HatchTypes hatch_type);
-		void SetColor(const Color clr);
-		void SetColor(const StandartColors clr);
 		void SetBitmap(const HBITMAP bm);
+
+		template <typename ColorType>
+		void SetColor(const ColorType clr) {
+			color = Color(clr);
+			DeleteObject(brush);
+			SelectStyle();
+		}
 
 		void Select(const HDC hdc) const;
 	private:

@@ -12,8 +12,14 @@ namespace Waw {
 
 		void SetStyle(const PenStyle st);
 		void SetWidth(const int32_t w);
-		void SetColor(const Color clr);
-		void SetColor(const StandartColors clr);
+
+	    template <typename ColorType>
+		void SetColor(const ColorType clr) {
+			color = Color(clr);
+			DeleteObject(pen);
+			pen = CreatePen(static_cast<int>(style), width, color.GetColorRef());
+		}
+
 		void Select(const HDC hdc) const;
 
 	private:

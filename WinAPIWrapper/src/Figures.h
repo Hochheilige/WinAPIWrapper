@@ -9,9 +9,10 @@
 
 namespace Waw {
 
+	template <class T>
 	class Figure {
 	public:
-		virtual void Draw() const = 0;
+		void Draw() const {as_underlying().Draw();}
 
 		template <typename ColorType>
 		void SetColor(const ColorType color) {
@@ -41,6 +42,12 @@ namespace Waw {
 		std::vector<Point> vertexes;
 		Pen pen;
 		Brush brush;
+
+	private:
+		friend T;
+		Figure() = default;
+
+		inline T& as_underlying() { return static_cast<T&>(*this); }
 	};
 
 }

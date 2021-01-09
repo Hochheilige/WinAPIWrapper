@@ -4,7 +4,7 @@
 
 namespace Waw {
 
-	class Rect : public Figure {
+	class Rect : public Figure<Rect> {
 	public:
 		Rect();
 		Rect(const Point left_top, const Point right_bottom,
@@ -21,7 +21,7 @@ namespace Waw {
 			 const HatchTypes hatch_type = HatchTypes::HORIZONTAL,
 			 const HBITMAP bm = nullptr);
 
-		void Draw() const override;
+		void Draw() const;
 
 		void SetVertexes(const Point left_top, const Point right_bottom);
 	};

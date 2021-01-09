@@ -4,7 +4,7 @@
 
 namespace Waw {
 
-	class Triangle : public Figure {
+	class Triangle : public Figure<Triangle> {
 	public:
 		Triangle();
 		Triangle(const Point v1, const Point v2, const Point v3,
@@ -21,9 +21,12 @@ namespace Waw {
 				 const HatchTypes hatch_type = HatchTypes::HORIZONTAL,
 				 const HBITMAP bm = nullptr);
 
-		void Draw() const override;
+		void Draw() const;
 
 		void SetVertexes(const Point v1, const Point v2, const Point v3);
+
+	//private:
+	//	friend class Figure<Triangle>;
 	};
 
 }

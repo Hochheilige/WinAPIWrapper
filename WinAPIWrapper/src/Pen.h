@@ -17,7 +17,7 @@ namespace Waw {
 		void SetColor(const ColorType clr) {
 			color = Color(clr);
 			DeleteObject(pen);
-			pen = CreatePen(static_cast<int>(style), width, color.GetColorRef());
+			pen = CreatePen(static_cast<uint8_t>(style), width, color.GetColorRef());
 		}
 
 		void Select(const HDC hdc) const;

@@ -2,7 +2,7 @@
 
 namespace Waw {
 
-	enum class PenStyle {
+	enum class PenStyle : uint8_t {
 		SOLID,
 		DASH,
 		DOT,
@@ -12,13 +12,13 @@ namespace Waw {
 		INSIDEFRAME
 	};
 
-	enum class BrushStyle {
+	enum class BrushStyle : uint8_t {
 		SOLID,
 		HATCH,
 		PATTERN
 	};
 
-	enum class HatchTypes {
+	enum class HatchTypes : uint8_t {
 		HORIZONTAL,
 		VERTICAL,
 		FDIAGONAL, // from left top to right bottom
@@ -27,7 +27,7 @@ namespace Waw {
 		DIAGCROSS,
 	};
 
-	enum class StandartColors {
+	enum class StandartColors : uint8_t {
 		WHITE,
 		BLACK,
 		RED,

@@ -5,7 +5,7 @@ namespace Waw {
 	Color::Color() : red(255), green(255), blue(255) {
 	}
 
-	Color::Color(const uint16_t r, const uint16_t g, const uint16_t b) 
+	Color::Color(const uint8_t r, const uint8_t g, const uint8_t b) 
 		: red(r), green(g), blue(b) {
 	
 	}

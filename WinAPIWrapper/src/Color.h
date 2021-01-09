@@ -8,10 +8,10 @@
 namespace Waw {
 
 	struct Color {
-		uint16_t red, green, blue;
+		uint8_t red, green, blue;
 
 		Color();
-		Color(const uint16_t r, const uint16_t g, const uint16_t b);
+		Color(const uint8_t r, const uint8_t g, const uint8_t b);
 		explicit Color(const StandartColors color);
 
 		COLORREF GetColorRef() const;

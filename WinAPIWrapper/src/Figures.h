@@ -12,7 +12,7 @@ namespace Waw {
 	template <class T>
 	class Figure {
 	public:
-		void Draw() const {as_underlying().Draw();}
+		void Draw() const { as_underlying().Draw(); }
 
 		template <typename ColorType>
 		void SetColor(const ColorType color) {

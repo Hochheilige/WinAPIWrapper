@@ -24,9 +24,6 @@ namespace Waw {
 		void Draw() const;
 
 		void SetVertexes(const Point v1, const Point v2, const Point v3);
-
-	//private:
-	//	friend class Figure<Triangle>;
 	};
 
 }

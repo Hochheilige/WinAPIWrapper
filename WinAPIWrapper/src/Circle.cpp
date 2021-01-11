@@ -20,7 +20,7 @@ namespace Waw {
 			left_top,
 			right_bottom
 		};
-		pen = Pen(pen_style, width, contour);
+		pen = Pen(pen_style, contour, width);
 		brush = Brush(brush_style, inner, hatch_type, bm);
 	}
 
@@ -33,7 +33,7 @@ namespace Waw {
 			left_top,
 			right_bottom
 		};
-		pen = Pen(pen_style, width, contour);
+		pen = Pen(pen_style, contour, width);
 		brush = Brush(brush_style, inner, hatch_type, bm);
 	}
 

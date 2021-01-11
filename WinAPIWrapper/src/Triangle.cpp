@@ -18,7 +18,7 @@ namespace Waw {
 					   const BrushStyle brush_style, const HatchTypes hatch_type,
 					   const HBITMAP bm) {
 		vertexes = { v1, v2, v3 };
-		pen = Pen(pen_style, width, contour);
+		pen = Pen(pen_style, contour, width);
 		brush = Brush(brush_style, inner, hatch_type, bm);
 	}
 
@@ -28,7 +28,7 @@ namespace Waw {
 					   const BrushStyle brush_style, const HatchTypes hatch_type,
 					   const HBITMAP bm) {
 		vertexes = { v1, v2, v3 };
-		pen = Pen(pen_style, width, contour);
+		pen = Pen(pen_style, contour, width);
 		brush = Brush(brush_style, inner, hatch_type, bm);
 	}
 

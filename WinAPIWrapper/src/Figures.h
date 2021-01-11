@@ -38,12 +38,11 @@ namespace Waw {
 		inline Pen GetPen() const { return pen; }
 		inline Brush GetBrush() const { return brush; }
 
-	protected:
+	private:
 		std::vector<Point> vertexes;
 		Pen pen;
 		Brush brush;
 
-	private:
 		friend T;
 		Figure() = default;
 

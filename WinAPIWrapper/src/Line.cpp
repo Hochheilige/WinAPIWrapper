@@ -11,7 +11,7 @@ namespace Waw {
 
 	Line::Line(const Point start, const Point finish,
 			   PenStyle style, int32_t width, StandartColors color)
-		: entry(start), destination(finish), pen({ style, width, color }) {
+		: entry(start), destination(finish), pen({ style, color, width }) {
 	}
 
 	void Line::Draw() const {

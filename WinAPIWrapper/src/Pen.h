@@ -7,8 +7,8 @@ namespace Waw {
 	class Pen {
 	public:
 		Pen();
-		Pen(const PenStyle st, const int32_t w, const Color clr);
-		Pen(const PenStyle st, const int32_t w, const StandartColors clr);
+		Pen(const PenStyle st, const Color clr, const int32_t w);
+		Pen(const PenStyle st, const StandartColors clr, const int32_t w);
 
 		void SetStyle(const PenStyle st);
 		void SetWidth(const int32_t w);
@@ -23,10 +23,10 @@ namespace Waw {
 		void Select(const HDC hdc) const;
 
 	private:
-		HPEN pen;
 		PenStyle style;
-		int32_t width;
 		Color color;
+		int32_t width;
+		HPEN pen;
 	};
 
 }

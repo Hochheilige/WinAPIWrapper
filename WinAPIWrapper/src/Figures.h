@@ -12,7 +12,7 @@ namespace Waw {
 	template <class T>
 	class Figure {
 	public:
-		void Draw() const { as_underlying().Draw(); }
+		void Draw() const { MakeFigure().Draw(); }
 
 		template <typename ColorType>
 		void SetColor(const ColorType color) {
@@ -47,7 +47,7 @@ namespace Waw {
 		friend T;
 		Figure() = default;
 
-		inline T& as_underlying() { return static_cast<T&>(*this); }
+		inline T& MakeFigure() { return static_cast<T&>(*this); }
 	};
 
 }

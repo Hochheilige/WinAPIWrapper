@@ -2,30 +2,30 @@
 
 namespace Waw {
 
-	Pen::Pen() : style(PenStyle::SOLID), width(1), color(Color()) {
-		pen = CreatePen(static_cast<int>(style), width, color.GetColorRef());
+	Pen::Pen() : style(PenStyle::SOLID), color(Color()), width(1) {
+		pen = CreatePen(static_cast<uint8_t>(style), width, color.GetColorRef());
 	}
 
-	Pen::Pen(const PenStyle st, const int32_t w, const Color clr)
-		: style(st), width(w), color(clr) {
-		pen = CreatePen(static_cast<int>(style), width, color.GetColorRef());
+	Pen::Pen(const PenStyle st, const Color clr, const int32_t w)
+		: style(st), color(clr), width(w) {
+		pen = CreatePen(static_cast<uint8_t>(style), width, color.GetColorRef());
 	}
 
-	Pen::Pen(const PenStyle st, const int32_t w, const StandartColors clr)
-		: style(st), width(w), color(clr) {
-		pen = CreatePen(static_cast<int>(style), width, color.GetColorRef());
+	Pen::Pen(const PenStyle st, const StandartColors clr, const int32_t w)
+		: style(st), color(clr), width(w) {
+		pen = CreatePen(static_cast<uint8_t>(style), width, color.GetColorRef());
 	}
 
 	void Pen::SetStyle(const PenStyle st) {
 		style = st;
 		DeleteObject(pen);
-		pen = CreatePen(static_cast<int>(style), width, color.GetColorRef());
+		pen = CreatePen(static_cast<uint8_t>(style), width, color.GetColorRef());
 	}
 
 	void Pen::SetWidth(const int32_t w) {
 		width = w;
 		DeleteObject(pen);
-		pen = CreatePen(static_cast<int>(style), width, color.GetColorRef());
+		pen = CreatePen(static_cast<uint8_t>(style), width, color.GetColorRef());
 	}
 
 	void Pen::Select(const HDC hdc) const {

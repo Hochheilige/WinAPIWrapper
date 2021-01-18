@@ -1,0 +1,1 @@
+cmake -S ../WinAPIWrapper -B ../out/build/

@@ -37,5 +37,7 @@
 # TODO
 TODO.txt
 
+# VS 
 *.vcxproj
 *.vcxproj.*
+*.sln

@@ -34,8 +34,5 @@
 # User
 *.user
 
-*.sln
-*.vcxproj*
-
-#TODE
-TODO.txt
+# TODO
+*.txt

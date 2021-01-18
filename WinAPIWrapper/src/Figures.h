@@ -12,7 +12,7 @@ namespace Waw {
 	template <class T>
 	class Figure {
 	public:
-		void Draw() const { MakeFigure().Draw(); }
+		void Draw(HDC hdc) const { MakeFigure().Draw(hdc); }
 
 		template <typename ColorType>
 		void SetColor(const ColorType color) {

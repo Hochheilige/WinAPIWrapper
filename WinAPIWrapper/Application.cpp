@@ -23,7 +23,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 	hInst = hInstance;
 	Window::SetUpWindow(hInst, nCmdShow, WndProc);
 
-
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT1));
 	MSG msg;
 
@@ -56,9 +55,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			PAINTSTRUCT ps;
 			HDC hdc = BeginPaint(hWnd, &ps);
 
-			 
-			
-			 Triangle tr({ 50, 250 }, { 650, 250 }, { 350, 150 }, StandartColors::GREEN);
+			Triangle tr({ 50, 250 }, { 650, 250 }, { 350, 150 }, StandartColors::GREEN);
 			Rect rectangle({ 300, 300 }, { 400, 400 }, StandartColors::CYAN);
 			tr.SetFillHatch(HatchTypes::DIAGCROSS);
 			tr.SetColor(StandartColors::YELLOW);
@@ -66,10 +63,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 			container_type figures = { circle, tr, rectangle };
 			for (const auto& figure : figures)
-				std::visit([](auto& fig) { fig.Draw(); }, figure);
+				std::visit([&](auto& fig) { fig.Draw(hdc); }, figure);
 
 			Line* line = new Line({ 500, 420 }, { 200, 420 }, PenStyle::DOT, 6, StandartColors::GREEN);
-			line->Draw();
+			line->Draw(hdc);
 
 			EndPaint(hWnd, &ps);
 		} break;

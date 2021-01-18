@@ -31,14 +31,15 @@ namespace Waw {
 
 		wcex.cbSize = sizeof(WNDCLASSEX);
 
-    wcex.style = CS_HREDRAW | CS_VREDRAW;
+        wcex.style = CS_HREDRAW | CS_VREDRAW;
 		wcex.lpfnWndProc = WNDPROC;
 		wcex.cbClsExtra = 0;
 		wcex.cbWndExtra = 0;
 		wcex.hInstance = hInstance;
 		wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(107));
 		wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-		wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+		HBRUSH b = CreateSolidBrush(RGB(0, 0, 0));
+		wcex.hbrBackground = b;
 		wcex.lpszMenuName = MAKEINTRESOURCEW(109);
 		wcex.lpszClassName = L"Waw Window";
 		wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(108));

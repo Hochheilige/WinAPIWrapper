@@ -32,9 +32,10 @@ namespace Waw {
 		brush = Brush(brush_style, inner, hatch_type, bm);
 	}
 
-	void Triangle::Draw() const {
+	void Triangle::Draw(HDC hds) const {
 		Window* wnd = Window::GetInstance();
-		HDC hdc = GetDC(wnd->GetWindow());
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(wnd->GetWindow(), &ps);
 		pen.Select(hdc);
 		brush.Select(hdc);
 		POINT* points = new POINT[3]{
@@ -43,8 +44,7 @@ namespace Waw {
 			{ vertexes[2].x, vertexes[2].y }
 		};
 		Polygon(hdc, points, 3);
-
-		ReleaseDC(wnd->GetWindow(), hdc);
+		//EndPaint(wnd->GetWindow(), &ps);
 		delete[] points;
 	}
 

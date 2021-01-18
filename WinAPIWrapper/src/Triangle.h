@@ -21,7 +21,7 @@ namespace Waw {
 				 const HatchTypes hatch_type = HatchTypes::HORIZONTAL,
 				 const HBITMAP bm = nullptr);
 
-		void Draw() const;
+		void Draw(HDC hdc) const;
 
 		void SetVertexes(const Point v1, const Point v2, const Point v3);
 	};

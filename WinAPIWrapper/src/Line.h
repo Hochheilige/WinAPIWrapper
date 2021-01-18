@@ -14,7 +14,7 @@ namespace Waw {
 		Line(const Point start, const Point finish, const PenStyle style = PenStyle::SOLID,
 			 const int32_t width = 1, const StandartColors color = StandartColors::WHITE);
 
-		void Draw() const;
+		void Draw(HDC hdc) const;
 		void SetCoord(const Point start, const Point finish);
 
 		inline void SetEntry(const Point start) { entry = start; }

@@ -56,9 +56,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			PAINTSTRUCT ps;
 			HDC hdc = BeginPaint(hWnd, &ps);
 
-			Rectangle(hdc, 100, 100, 500, 500);
+			 
 			
-			Triangle tr({ 50, 250 }, { 650, 250 }, { 350, 150 }, StandartColors::GREEN);
+			 Triangle tr({ 50, 250 }, { 650, 250 }, { 350, 150 }, StandartColors::GREEN);
 			Rect rectangle({ 300, 300 }, { 400, 400 }, StandartColors::CYAN);
 			tr.SetFillHatch(HatchTypes::DIAGCROSS);
 			tr.SetColor(StandartColors::YELLOW);

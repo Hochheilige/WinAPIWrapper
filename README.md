@@ -1,2 +1,2 @@
 # WinAPIWrapper
-OOP wrapper to draw (at least) figures in console using WinAPI 
+Simple OOP Wrapper under WinAPI to draw simple figures like Triangles, Rectangles and Circles.

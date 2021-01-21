@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-#include "Window.h"
+#include <Windows.h>
 #include "Styles.h"
 
 namespace Waw {

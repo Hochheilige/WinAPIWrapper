@@ -19,12 +19,16 @@ APPEND
         Triangle.h
 	Window.cpp
         Window.h
-        WinAPIWrapper.h
         Figures.h
         Styles.h
+        Resource.h
 )
 
 if(BUILD_EXAMPLE)
+    message("-- Build WinAPIWrapper as static library")
+    add_library(WinAPIWrapper STATIC ${WawSrc} ../include/WinAPIWrapper.h)
+else()
+    project(Wawlib LANGUAGES CXX)
     if(BUILD_SHARED_LIBS)
         set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
         message("-- Build WinAPIWrapper as shared library")
@@ -34,5 +38,17 @@ if(BUILD_EXAMPLE)
         add_library(WinAPIWrapper STATIC ${WawSrc})
     endif()
 endif() 
+
+    target_include_directories(WinAPIWrapper
+	PRIVATE ${CMAKE_SOURCE_DIR}/src/
+	PRIVATE ${CMAKE_SOURCE_DIR}/include/
+        PRIVATE ${CMAKE_SOURCE_DIR}/examples/
+    )
+
+    target_link_directories(WinAPIWrapper 
+	PRIVATE ${CMAKE_SOURCE_DIR}/src/
+	PRIVATE ${CMAKE_SOURCE_DIR}/include/
+        PRIVATE ${CMAKE_SOURCE_DIR}/examples/
+    )
 
 target_compile_features(WinAPIWrapper PRIVATE cxx_std_17)

@@ -1,14 +1,10 @@
 #include <WinAPIWrapper.h>
 
-#include "Resource.h"
-
 #include <iostream>
 #include <vector>
 #include <variant>
 
-using namespace Waw;
-
-HINSTANCE hInst;  
+using namespace Waw; 
 
 template <typename... Ts>
 using poly_T = std::variant<Ts...>;
@@ -17,16 +13,17 @@ using container_type = std::vector<
 	poly_T<Triangle, Rect, Circle>
 >;
 
+HINSTANCE hInst; 
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow) {
 	hInst = hInstance;
-	Window::SetUpWindow(hInst, nCmdShow, WndProc);
+	Window window(hInst, nCmdShow, WndProc);
 
-	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT1));
+	HACCEL hAccelTable = LoadAccelerators(hInst, MAKEINTRESOURCE(IDC_WAW));
 	MSG msg;
 
-	// Цикл основного сообщения:
 	while (GetMessage(&msg, nullptr, 0, 0)) {
 		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) {
 			TranslateMessage(&msg);
@@ -39,7 +36,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 	switch (message) {
 		case WM_COMMAND: {
 			int wmId = LOWORD(wParam);
-			// Разобрать выбор в меню:
 			switch (wmId) {
 				case IDM_ABOUT:
 					DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, NULL);
@@ -67,6 +63,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 			Line* line = new Line({ 500, 420 }, { 200, 420 }, PenStyle::DOT, 6, StandartColors::GREEN);
 			line->Draw(hdc);
+			delete line;
 
 			EndPaint(hWnd, &ps);
 		} break;

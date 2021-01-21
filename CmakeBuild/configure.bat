@@ -1,1 +1,1 @@
-cmake -S ../WinAPIWrapper -B ../out/build/
+cmake -S .. -B ../out/build/

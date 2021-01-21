@@ -2,8 +2,8 @@
 
 #include <cmath>
 
-#include "Point.h"
-#include "Pen.h"
+#include <Point.h>
+#include <Pen.h>
 
 namespace Waw {
 

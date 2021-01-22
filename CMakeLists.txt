@@ -8,20 +8,20 @@ option(BUILD_EXAMPLE "Build Waw example program" ON)
 if(BUILD_EXAMPLE)
     message("-- Build Waw example program")
     project(WawExample LANGUAGES CXX)
-    add_executable(${PROJECT_NAME} WIN32 examples/Application.cpp)
 
+    add_subdirectory(examples)
+  
     add_subdirectory(src)
 
     target_include_directories(${PROJECT_NAME}
 	PRIVATE src/
 	PRIVATE include/
-        PRIVATE examples/
+        
     )
 
     target_link_directories(${PROJECT_NAME} 
 	PRIVATE src/
 	PRIVATE include/
-        PRIVATE examples/
     )
 
     target_link_libraries(${PROJECT_NAME} WinAPIWrapper)

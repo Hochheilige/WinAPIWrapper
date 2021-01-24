@@ -28,7 +28,7 @@ WawExample.exe
 
 If all this actions completed successfully you will see example image
 
-![alt text](https://github.com/Hochheililge/WinAPIWrapper/Resources/example.PNG?raw=true)
+![WinAPIWrapper](/Resources/example.PNG?raw=true "Example Image")
 
 ## Using as library
 

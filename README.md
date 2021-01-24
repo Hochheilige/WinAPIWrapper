@@ -28,7 +28,7 @@ WawExample.exe
 
 If all this actions completed successfully you will see example image
 
-![alt text](https://github.com/Hochheililge/WinAPIWrapper/Resources/example.PNG "Example Image")
+![alt text](https://github.com/Hochheililge/WinAPIWrapper/Resources/example.PNG?raw=true)
 
 ## Using as library
 
@@ -75,11 +75,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 }
 ```
 
-To create a window use Window class from Waw namespace:
+* To create a window use Window class from Waw namespace:
 ```
 Waw::Window window(hInst, nCmdShow, WndProc);
 ```
-You can set window dimensions like this:
+* You can set window dimensions like this:
 ```
 Waw::Window window(hInst, nCmdShow, WndProc, 800, 600);
 ```

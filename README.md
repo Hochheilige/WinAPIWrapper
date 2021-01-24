@@ -28,7 +28,7 @@ WawExample.exe
 
 If all this actions completed successfully you will see example image
 
-![alt text](https://github.com/Hochheililge/WinAPIWrapper/Resources/example.png "Example Image")
+![alt text](https://github.com/Hochheililge/WinAPIWrapper/Resources/example.PNG "Example Image")
 
 ## Using as library
 
@@ -36,13 +36,13 @@ If all this actions completed successfully you will see example image
 
 You can use WinAPIWrapper as static or shared library. This can be selected using CMake options:
 
-⋅⋅* Static library
+* Static library
 ```
 cmake -S .. -B ../out/build/ -DBUILD_EXAMPLE=OFF
 cmake --build ../out/build 
 ```
 
-⋅⋅* Shared library
+* Shared library
 ```
 cmake -S .. -B ../out/build/ -DBUILD_EXAMPLE=OFF -DBUILD_SHARED_LIBS=ON
 cmake --build ../out/build

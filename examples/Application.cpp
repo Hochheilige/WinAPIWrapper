@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <variant>
+#include <memory>
 
 using namespace Waw; 
 
@@ -51,19 +52,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			PAINTSTRUCT ps;
 			HDC hdc = BeginPaint(hWnd, &ps);
 
-			Triangle tr({ 50, 250 }, { 650, 250 }, { 350, 150 }, StandartColors::GREEN);
-			Rect rectangle({ 300, 300 }, { 400, 400 }, StandartColors::CYAN);
+			Triangle tr({ 90, 250 }, { 390, 150 }, { 690, 250 }, StandartColors::GREEN);
+			Rect rectangle({ 340, 300 }, { 440, 400 }, StandartColors::CYAN);
+			Circle circle({ 240, 200 }, { 540, 500 }, StandartColors::MAGENTA);
+			std::unique_ptr<Line> line(new Line({ 540, 420 }, { 240, 420 }, PenStyle::DOT, 6, StandartColors::GREEN));
 			tr.SetFillHatch(HatchTypes::DIAGCROSS);
 			tr.SetColor(StandartColors::YELLOW);
-			Circle circle({ 200, 200 }, { 500, 500 }, StandartColors::MAGENTA);
 
 			container_type figures = { circle, tr, rectangle };
 			for (const auto& figure : figures)
 				std::visit([&](auto& fig) { fig.Draw(hdc); }, figure);
-
-			Line* line = new Line({ 500, 420 }, { 200, 420 }, PenStyle::DOT, 6, StandartColors::GREEN);
 			line->Draw(hdc);
-			delete line;
 
 			EndPaint(hWnd, &ps);
 		} break;

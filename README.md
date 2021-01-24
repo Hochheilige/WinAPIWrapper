@@ -52,7 +52,7 @@ cmake --build ../out/build
 
 After that in your application you should include WinAPIWrapper.h and create HINSTANCE, WndProc function decalration and classical WinAPI main function.
 
-```
+```c++
 #include <WinAPIWrapper.h>
 
 HINSTANCE hInst; 
@@ -76,16 +76,16 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 ```
 
 * To create a window use Window class from Waw namespace:
-```
+```c++
 Waw::Window window(hInst, nCmdShow, WndProc);
 ```
 * You can set window dimensions like this:
-```
+```c++
 Waw::Window window(hInst, nCmdShow, WndProc, 800, 600);
 ```
 
 The last step to get started is to create a WndProc function definition:
-```
+```c++
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	switch (message) {
 		case WM_COMMAND: {

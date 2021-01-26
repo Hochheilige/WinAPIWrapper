@@ -57,6 +57,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			int32_t width = window_rect.right - window_rect.left;
 			int32_t height = window_rect.bottom - window_rect.top;
 
+		    HDC memoryDC = CreateCompatibleDC(hdc);
+			HBITMAP bitmap = CreateCompatibleBitmap(hdc, width, height);
+			HBITMAP old_bitmap = (HBITMAP)SelectObject(memoryDC, bitmap);
+
 			Triangle tr({ width / 2 - 300, height / 2 - 50 }, { width / 2, height / 2 - 150 }, { width / 2 + 300, height / 2 - 50 }, StandartColors::GREEN);
 			Rect rectangle({ width / 2 - 50, height / 2 }, { width / 2 + 50, height / 2 + 100 }, StandartColors::CYAN);
 			Circle circle({ width / 2 - 150, height / 2 - 100 }, { width / 2 + 150, height / 2 + 200 }, StandartColors::MAGENTA);
@@ -66,8 +70,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 			container_type figures = { circle, tr, rectangle };
 			for (const auto& figure : figures)
-				std::visit([&](auto& fig) { fig.Draw(hdc); }, figure);
-			line->Draw(hdc);
+				std::visit([&](auto& fig) { fig.Draw(memoryDC); }, figure);
+			line->Draw(memoryDC);
+
+			BitBlt(hdc, 0, 0, width, height, memoryDC, 0, 0, SRCCOPY);
+
+			SelectObject(memoryDC, old_bitmap);
+			DeleteObject(bitmap);
+			DeleteDC(memoryDC);
 
 			EndPaint(hWnd, &ps);
 		} break;

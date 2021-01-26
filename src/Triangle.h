@@ -24,6 +24,7 @@ namespace Waw {
 		void Draw(HDC hdc) const;
 
 		void SetVertexes(const Point v1, const Point v2, const Point v3);
+
 	};
 
 }

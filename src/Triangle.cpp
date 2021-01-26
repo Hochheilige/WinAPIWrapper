@@ -8,8 +8,8 @@ namespace Waw {
 			{ 0  , 100 },
 			{ 100, 100 }
 		};
-		pen = Pen();
-		brush = Brush();
+		pen.reset(new Pen());
+		brush.reset(new Brush());
 	}
 
 	Triangle::Triangle(const Point v1, const Point v2, const Point v3,
@@ -18,8 +18,8 @@ namespace Waw {
 					   const BrushStyle brush_style, const HatchTypes hatch_type,
 					   const HBITMAP bm) {
 		vertexes = { v1, v2, v3 };
-		pen = Pen(pen_style, contour, width);
-		brush = Brush(brush_style, inner, hatch_type, bm);
+		pen.reset(new Pen{ pen_style, contour, width });
+		brush.reset(new Brush{ brush_style, inner, hatch_type, bm });
 	}
 
 	Triangle::Triangle(const Point v1, const Point v2, const Point v3,
@@ -28,13 +28,13 @@ namespace Waw {
 					   const BrushStyle brush_style, const HatchTypes hatch_type,
 					   const HBITMAP bm) {
 		vertexes = { v1, v2, v3 };
-		pen = Pen(pen_style, contour, width);
-		brush = Brush(brush_style, inner, hatch_type, bm);
+		pen.reset(new Pen{ pen_style, contour, width });
+		brush.reset(new Brush{ brush_style, inner, hatch_type, bm });
 	}
 
 	void Triangle::Draw(HDC hdc) const {
-		pen.Select(hdc);
-		brush.Select(hdc);
+		pen->Select(hdc);
+		brush->Select(hdc);
 		POINT* points = new POINT[3]{
 			{ vertexes[0].x, vertexes[0].y },
 			{ vertexes[1].x, vertexes[1].y },

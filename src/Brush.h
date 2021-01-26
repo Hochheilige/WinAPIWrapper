@@ -14,6 +14,8 @@ namespace Waw {
 			  const HatchTypes hatch_type = HatchTypes::HORIZONTAL,
 			  const HBITMAP bm = nullptr);
 
+		~Brush();
+
 		void SetBrushStyle(const BrushStyle st,
 						   const HatchTypes hatch_type = HatchTypes::HORIZONTAL,
 						   const HBITMAP bm = nullptr);

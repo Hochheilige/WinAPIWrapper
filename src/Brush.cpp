@@ -28,6 +28,10 @@ namespace Waw {
 		SelectStyle();
 	}
 
+	Brush::~Brush() {
+		DeleteObject(brush);
+	}
+
 	void Brush::SetBrushStyle(const BrushStyle st, const HatchTypes hatch_type, 
 							  const HBITMAP bm) {
 		style = st;

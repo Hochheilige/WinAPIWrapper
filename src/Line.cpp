@@ -14,10 +14,14 @@ namespace Waw {
 		: entry(start), destination(finish), pen({ style, color, width }) {
 	}
 
+	Line::~Line() {
+	}
+
 	void Line::Draw(HDC hdc) const {
 		pen.Select(hdc);
 		MoveToEx(hdc, entry.x, entry.y, nullptr);
 		LineTo(hdc, destination.x, destination.y);
+		DeleteObject(pen.GetPen());
 	}
 
 	void Line::SetCoord(const Point start, const Point finish) {

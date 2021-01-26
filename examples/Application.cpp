@@ -2,19 +2,19 @@
 
 #include <iostream>
 #include <vector>
-#include <variant>
 #include <memory>
+#include <variant>
 
-using namespace Waw; 
+using namespace Waw;
 
 template <typename... Ts>
-using poly_T = std::variant<Ts...>;
+using Figures = std::variant<Ts...>;
 
 using container_type = std::vector<
-	poly_T<Triangle, Rect, Circle>
+	Figures<Triangle, Rect, Circle>
 >;
 
-HINSTANCE hInst; 
+HINSTANCE hInst;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -31,7 +31,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 			DispatchMessage(&msg);
 		}
 	}
-} 
+}
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	switch (message) {
@@ -52,10 +52,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			PAINTSTRUCT ps;
 			HDC hdc = BeginPaint(hWnd, &ps);
 
-			Triangle tr({ 90, 250 }, { 390, 150 }, { 690, 250 }, StandartColors::GREEN);
-			Rect rectangle({ 340, 300 }, { 440, 400 }, StandartColors::CYAN);
-			Circle circle({ 240, 200 }, { 540, 500 }, StandartColors::MAGENTA);
-			std::unique_ptr<Line> line(new Line({ 540, 420 }, { 240, 420 }, PenStyle::DOT, 6, StandartColors::GREEN));
+			RECT window_rect = { 0 };
+			GetWindowRect(hWnd, &window_rect);
+			int32_t width = window_rect.right - window_rect.left;
+			int32_t height = window_rect.bottom - window_rect.top;
+
+			Triangle tr({ width / 2 - 300, height / 2 - 50 }, { width / 2, height / 2 - 150 }, { width / 2 + 300, height / 2 - 50 }, StandartColors::GREEN);
+			Rect rectangle({ width / 2 - 50, height / 2 }, { width / 2 + 50, height / 2 + 100 }, StandartColors::CYAN);
+			Circle circle({ width / 2 - 150, height / 2 - 100 }, { width / 2 + 150, height / 2 + 200 }, StandartColors::MAGENTA);
+			std::unique_ptr<Line> line(new Line({ width / 2 + 150, height / 2 + 120 }, { width / 2 - 150, height / 2 + 120 }, PenStyle::DOT, 6, StandartColors::GREEN));
 			tr.SetFillHatch(HatchTypes::DIAGCROSS);
 			tr.SetColor(StandartColors::YELLOW);
 

@@ -14,6 +14,8 @@ namespace Waw {
 		Line(const Point start, const Point finish, const PenStyle style = PenStyle::SOLID,
 			 const int32_t width = 1, const StandartColors color = StandartColors::WHITE);
 
+		~Line();
+
 		void Draw(HDC hdc) const;
 		void SetCoord(const Point start, const Point finish);
 
@@ -24,8 +26,8 @@ namespace Waw {
 		inline void SetStyle(const PenStyle style) { pen.SetStyle(style); }
 		inline void SetWidth(const int32_t width) { pen.SetWidth(width); }
 
-		inline int32_t GetLength() {
-			return sqrt(pow((destination.x - entry.x), 2) +pow((destination.y - entry.y), 2));
+		inline double GetLength() {
+			return sqrt(pow((destination.x - entry.x), 2) + pow((destination.y - entry.y), 2));
 		}
 		inline Point GetEntry() { return { entry.x, entry.y }; }
 		inline Point GetDestination() { return { destination.x, destination.y }; }

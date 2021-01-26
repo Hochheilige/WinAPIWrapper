@@ -10,6 +10,8 @@ namespace Waw {
 		Pen(const PenStyle st, const Color clr, const int32_t w);
 		Pen(const PenStyle st, const StandartColors clr, const int32_t w);
 
+		~Pen();
+
 		void SetStyle(const PenStyle st);
 		void SetWidth(const int32_t w);
 
@@ -21,6 +23,8 @@ namespace Waw {
 		}
 
 		void Select(const HDC hdc) const;
+
+		HPEN GetPen() const { return pen; }
 
 	private:
 		PenStyle style;

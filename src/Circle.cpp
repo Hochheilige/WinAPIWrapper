@@ -7,8 +7,8 @@ namespace Waw {
 			{0, 0},
 			{100, 100}
 		};
-		pen = Pen();
-		brush = Brush();
+		pen.reset(new Pen());
+		brush.reset(new Brush());
 	}
 
 	Circle::Circle(const Point left_top, const Point right_bottom,
@@ -20,8 +20,8 @@ namespace Waw {
 			left_top,
 			right_bottom
 		};
-		pen = Pen(pen_style, contour, width);
-		brush = Brush(brush_style, inner, hatch_type, bm);
+		pen.reset(new Pen{ pen_style, contour, width });
+		brush.reset(new Brush{ brush_style, inner, hatch_type, bm });
 	}
 
 	Circle::Circle(const Point left_top, const Point right_bottom,
@@ -33,13 +33,13 @@ namespace Waw {
 			left_top,
 			right_bottom
 		};
-		pen = Pen(pen_style, contour, width);
-		brush = Brush(brush_style, inner, hatch_type, bm);
+		pen.reset(new Pen{ pen_style, contour, width });
+		brush.reset(new Brush{ brush_style, inner, hatch_type, bm });
 	}
 
 	void Circle::Draw(HDC hdc) const {
-		pen.Select(hdc);
-		brush.Select(hdc);
+		pen->Select(hdc);
+		brush->Select(hdc);
 		Ellipse(hdc, vertexes[0].x, vertexes[0].y, vertexes[1].x, vertexes[1].y);
 	}
 

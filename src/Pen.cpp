@@ -16,6 +16,10 @@ namespace Waw {
 		pen = CreatePen(static_cast<uint8_t>(style), width, color.GetColorRef());
 	}
 
+	Pen::~Pen() {
+		DeleteObject(pen);
+	}
+
 	void Pen::SetStyle(const PenStyle st) {
 		style = st;
 		DeleteObject(pen);

@@ -59,7 +59,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 		    HDC memoryDC = CreateCompatibleDC(hdc);
 			HBITMAP bitmap = CreateCompatibleBitmap(hdc, width, height);
-			//HBITMAP old_bitmap = (HBITMAP)SelectObject(memoryDC, bitmap);
 			SelectObject(memoryDC, bitmap);
 
 			Triangle tr({ width / 2 - 300, height / 2 - 50 }, { width / 2, height / 2 - 150 }, { width / 2 + 300, height / 2 - 50 }, StandartColors::GREEN);
@@ -76,7 +75,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 			BitBlt(hdc, 0, 0, width, height, memoryDC, 0, 0, SRCCOPY);
 
-			//SelectObject(memoryDC, old_bitmap);
 			DeleteObject(bitmap);
 			DeleteDC(memoryDC);
 

@@ -13,6 +13,7 @@ namespace Waw {
 	template <class T>
 	class Figure {
 	public:
+
 		void Draw(HDC hdc) const { MakeFigure().Draw(hdc); }
 
 		template <typename ColorType>
@@ -36,8 +37,8 @@ namespace Waw {
 		inline void SetFillHatch(const HatchTypes hatch_type) { brush->SetBrushStyle(BrushStyle::HATCH, hatch_type); }
 
 		inline std::vector<Point> GetVertexes() const { return vertexes; }
-		inline Pen GetPen() const { return pen; }
-		inline Brush GetBrush() const { return brush; }
+		inline std::shared_ptr<Pen> GetPen() const { return pen; }
+		inline std::shared_ptr<Brush> GetBrush() const { return brush; }
 
 	private:
 		std::vector<Point> vertexes;

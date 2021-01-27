@@ -26,7 +26,8 @@ namespace Waw {
 		template <typename ColorType>
 		void SetColor(const ColorType clr) {
 			color = Color(clr);
-			DeleteObject(brush);
+			if (brush)
+				DeleteObject(brush);
 			SelectStyle();
 		}
 

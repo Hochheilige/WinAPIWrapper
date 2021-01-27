@@ -22,13 +22,15 @@ namespace Waw {
 
 	void Pen::SetStyle(const PenStyle st) {
 		style = st;
-		DeleteObject(pen);
+		if (pen)
+			DeleteObject(pen);
 		pen = CreatePen(static_cast<uint8_t>(style), width, color.GetColorRef());
 	}
 
 	void Pen::SetWidth(const int32_t w) {
 		width = w;
-		DeleteObject(pen);
+		if (pen)
+			DeleteObject(pen);
 		pen = CreatePen(static_cast<uint8_t>(style), width, color.GetColorRef());
 	}
 

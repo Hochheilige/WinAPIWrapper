@@ -37,19 +37,22 @@ namespace Waw {
 		style = st;
 		hatch = hatch_type;
 		bitmap = bm;
-		DeleteObject(brush);
+		if (brush)
+			DeleteObject(brush);
 		SelectStyle();
 	}
 
 	void Brush::SetHatch(const HatchTypes hatch_type) {
 		hatch = hatch_type;
-		DeleteObject(brush);
+		if (brush)
+			DeleteObject(brush);
 		SelectStyle();
 	}
 
 	void Brush::SetBitmap(const HBITMAP bm) {
 		bitmap = bm;
-		DeleteObject(brush);
+		if (brush)
+			DeleteObject(brush);
 		SelectStyle();
 	}
 

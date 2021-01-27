@@ -36,7 +36,7 @@ namespace Waw {
 		wcex.hInstance = hInstance;
 		wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WAW));
 		wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-		wcex.hbrBackground = winColor;
+		wcex.hbrBackground = NULL; //winColor;
 		wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_WAW);
 		wcex.lpszClassName = L"Waw Window";
 		wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));

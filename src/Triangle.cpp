@@ -10,6 +10,25 @@ namespace Waw {
 		};
 		pen.reset(new Pen());
 		brush.reset(new Brush());
+		points = new POINT[3];
+		for (int i = 0; i < 3; ++i)
+			points[i] = { vertexes[i].x, vertexes[i].y };
+	}
+
+	Triangle::Triangle(const Triangle& tr) {
+		vertexes = tr.GetVertexes();
+		pen = tr.GetPen();
+		brush = tr.GetBrush();
+
+		if (!points)
+			points = new POINT[3];
+
+		for (int i = 0; i < 3; ++i)
+			points[i] = { vertexes[i].x, vertexes[i].y };
+	}
+
+	Triangle::Triangle(Triangle&& tr) {
+		// No implement
 	}
 
 	Triangle::Triangle(const Point v1, const Point v2, const Point v3,
@@ -20,6 +39,9 @@ namespace Waw {
 		vertexes = { v1, v2, v3 };
 		pen.reset(new Pen{ pen_style, contour, width });
 		brush.reset(new Brush{ brush_style, inner, hatch_type, bm });
+		points = new POINT[3];
+		for (int i = 0; i < 3; ++i)
+			points[i] = { vertexes[i].x, vertexes[i].y };
 	}
 
 	Triangle::Triangle(const Point v1, const Point v2, const Point v3,
@@ -30,24 +52,28 @@ namespace Waw {
 		vertexes = { v1, v2, v3 };
 		pen.reset(new Pen{ pen_style, contour, width });
 		brush.reset(new Brush{ brush_style, inner, hatch_type, bm });
+		points = new POINT[3];
+		for (int i = 0; i < 3; ++i)
+			points[i] = { vertexes[i].x, vertexes[i].y };
+	}
+
+	Triangle::~Triangle() {
+		if (points)
+			delete[] points;
 	}
 
 	void Triangle::Draw(HDC hdc) const {
 		pen->Select(hdc);
 		brush->Select(hdc);
-		POINT* points = new POINT[3]{
-			{ vertexes[0].x, vertexes[0].y },
-			{ vertexes[1].x, vertexes[1].y },
-			{ vertexes[2].x, vertexes[2].y }
-		};
 		Polygon(hdc, points, 3);
-
-		delete[] points;
 	}
 
 	void Triangle::SetVertexes(const Point v1, const Point v2, const Point v3) {
 		vertexes[0] = v1;
 		vertexes[1] = v2;
 		vertexes[2] = v3;
+
+		for (int i = 0; i < 3; ++i)
+			points[i] = { vertexes[i].x, vertexes[i].y };
 	}
 }

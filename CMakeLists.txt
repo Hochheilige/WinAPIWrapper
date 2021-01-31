@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
 
-option(BUILD_SHARED_LIBS "Build Waw as shared library" OFF)
-option(BUILD_STATIC_LIBS "Build Waw as static library" ON)
-option(BUILD_EXAMPLE "Build Waw example program" ON)
+option(BUILD_AS_SHARED_LIB "Build Waw as shared library" OFF)
+option(BUILD_AS_STATIC_LIB "Build Waw as static library" OFF)
+option(BUILD_EXAMPLE "Build Waw example program" OFF)
 
 
 if(BUILD_EXAMPLE)
@@ -14,20 +14,20 @@ if(BUILD_EXAMPLE)
     add_subdirectory(src)
 
     target_include_directories(${PROJECT_NAME}
-	PRIVATE src/
-	PRIVATE include/
-        
+	    PRIVATE src/
+	    PRIVATE include/  
     )
 
     target_link_directories(${PROJECT_NAME} 
-	PRIVATE src/
-	PRIVATE include/
+	    PRIVATE src/
+	    PRIVATE include/
     )
 
     target_link_libraries(${PROJECT_NAME} WinAPIWrapper)
 
     target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 else()
+    project(Wawlib LANGUAGES CXX)
     add_subdirectory(src)
 endif()
 

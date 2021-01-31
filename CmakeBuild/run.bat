@@ -1,2 +1,2 @@
-cd ../out/build/Debug
+cd ../out/build/examples/Debug
 WawExample.exe

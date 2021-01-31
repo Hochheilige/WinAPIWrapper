@@ -61,12 +61,33 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			HBITMAP bitmap = CreateCompatibleBitmap(hdc, width, height);
 			SelectObject(memoryDC, bitmap);
 
-			Triangle tr({ width / 2 - 300, height / 2 - 50 }, { width / 2, height / 2 - 150 }, { width / 2 + 300, height / 2 - 50 }, StandartColors::GREEN);
-			Rect rectangle({ width / 2 - 50, height / 2 }, { width / 2 + 50, height / 2 + 100 }, StandartColors::CYAN);
-			Circle circle({ width / 2 - 150, height / 2 - 100 }, { width / 2 + 150, height / 2 + 200 }, StandartColors::MAGENTA);
-			std::unique_ptr<Line> line(new Line({ width / 2 + 150, height / 2 + 120 }, { width / 2 - 150, height / 2 + 120 }, PenStyle::DOT, 6, StandartColors::GREEN));
-			tr.SetFillHatch(HatchTypes::DIAGCROSS);
+			Triangle tr(
+				{ width / 2 - 300, height / 2 - 50 }, 
+				{ width / 2, height / 2 - 150 }, 
+				{ width / 2 + 300, height / 2 - 50 }, 
+				StandartColors::GREEN
+			);
+
+		    tr.SetFillHatch(HatchTypes::DIAGCROSS);
 			tr.SetColor(StandartColors::YELLOW);
+
+			Rect rectangle(
+				{ width / 2 - 50, height / 2 },
+				{ width / 2 + 50, height / 2 + 100 },
+				StandartColors::CYAN
+			);
+
+			Circle circle(
+				{ width / 2 - 150, height / 2 - 100 },
+				{ width / 2 + 150, height / 2 + 200 },
+				StandartColors::MAGENTA
+			);
+
+			std::unique_ptr<Line> line(new Line(
+				{ width / 2 + 150, height / 2 + 120 }, 
+				{ width / 2 - 150, height / 2 + 120 }, 
+				PenStyle::DOT, 6, StandartColors::GREEN
+			));
 
 			container_type figures = { circle, tr, rectangle };
 			for (const auto& figure : figures)

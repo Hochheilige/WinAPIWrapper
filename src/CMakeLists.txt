@@ -35,6 +35,12 @@ else()
 	
 		add_custom_command(TARGET WinAPIWrapper POST_BUILD
 			COMMAND ${CMAKE_COMMAND} -E copy_if_different 
+				"${CMAKE_BINARY_DIR}/src/$<CONFIGURATION>/WinAPIWrapper.lib"
+				 ${CMAKE_SOURCE_DIR}/include/
+		)
+
+		add_custom_command(TARGET WinAPIWrapper POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy_if_different 
 				"${CMAKE_BINARY_DIR}/src/$<CONFIGURATION>/WinAPIWrapper.dll"
 				 ${CMAKE_SOURCE_DIR}/include/
 		)
@@ -45,9 +51,8 @@ else()
 
 		add_custom_command(TARGET WinAPIWrapper POST_BUILD
 			COMMAND ${CMAKE_COMMAND} -E copy_if_different 
-				"${CMAKE_BINARY_DIR}/src/$<CONFIGURATION>/WinAPIWrapper.lib
-				 ${CMAKE_BINARY_DIR}/src/Debug/WinAPIWrapper.pdb"
-				${CMAKE_SOURCE_DIR}/include/
+				"${CMAKE_BINARY_DIR}/src/$<CONFIGURATION>/WinAPIWrapper.lib"
+				 ${CMAKE_SOURCE_DIR}/include/
 		)
 	else()
 		message("-- Warning you didn't choose WinAPIWrapper build option")

@@ -29,6 +29,7 @@ if(BUILD_EXAMPLE)
     add_library(WinAPIWrapper STATIC ${WawSrc} ../include/WinAPIWrapper.h)
 else()
     if(BUILD_AS_SHARED_LIB)
+        set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
         message("-- Build WinAPIWrapper as shared library")
         add_library(WinAPIWrapper SHARED ${WawSrc})
 	

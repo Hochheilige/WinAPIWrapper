@@ -5,17 +5,16 @@ using namespace std;
 namespace Waw {
 
 	Window::Window(HINSTANCE hInstance, int nCmdShow, LRESULT(CALLBACK* wndProc)(HWND, UINT, WPARAM, LPARAM)) {
-		HBRUSH winColor = CreateSolidBrush(RGB(0, 0, 0));
 		wcex.cbSize = sizeof(WNDCLASSEX);
         wcex.style = CS_HREDRAW | CS_VREDRAW;
 		wcex.lpfnWndProc = wndProc;
 		wcex.cbClsExtra = 0;
 		wcex.cbWndExtra = 0;
 		wcex.hInstance = hInstance;
-		wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WAW));
+		wcex.hIcon = NULL;
 		wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-		wcex.hbrBackground = winColor;
-		wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_WAW);
+		wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+		wcex.lpszMenuName = NULL;
 		wcex.lpszClassName = L"Waw Window";
 		wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -44,7 +43,7 @@ namespace Waw {
 		RegisterClassExW(&wcex);
 
 		hWindow = CreateWindowW(L"Waw Window", L"Waw Window", WS_OVERLAPPEDWINDOW, 0, 0, widht, height, nullptr, nullptr, hInstance, nullptr);
-
+		
 		ShowWindow(hWindow, nCmdShow);
 	}
 

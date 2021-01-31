@@ -13,7 +13,7 @@ namespace Waw {
 		wcex.hInstance = hInstance;
 		wcex.hIcon = NULL;
 		wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-		wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+		wcex.hbrBackground = NULL;
 		wcex.lpszMenuName = NULL;
 		wcex.lpszClassName = L"Waw Window";
 		wcex.hIconSm = NULL;
@@ -26,7 +26,6 @@ namespace Waw {
 	}
 
 	Window::Window(HINSTANCE hInstance, int nCmdShow, LRESULT (*wndProc)(HWND, UINT, WPARAM, LPARAM), int widht, int height) {
-		HBRUSH winColor = CreateSolidBrush(RGB(0, 0, 0));
 		wcex.cbSize = sizeof(WNDCLASSEX);
 		wcex.style = CS_HREDRAW | CS_VREDRAW;
 		wcex.lpfnWndProc = wndProc;
@@ -35,7 +34,7 @@ namespace Waw {
 		wcex.hInstance = hInstance;
 		wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WAW));
 		wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-		wcex.hbrBackground = NULL; //winColor;
+		wcex.hbrBackground = NULL;
 		wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_WAW);
 		wcex.lpszClassName = L"Waw Window";
 		wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));

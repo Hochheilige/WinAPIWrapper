@@ -16,7 +16,7 @@ namespace Waw {
 		wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 		wcex.lpszMenuName = NULL;
 		wcex.lpszClassName = L"Waw Window";
-		wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+		wcex.hIconSm = NULL;
 
 		RegisterClassExW(&wcex);
 

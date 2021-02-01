@@ -21,7 +21,6 @@ APPEND
         Window.h
         Figures.h
         Styles.h
-        Resource.h
 )
 
 if(BUILD_EXAMPLE)

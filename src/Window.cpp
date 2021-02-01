@@ -4,50 +4,63 @@ using namespace std;
 
 namespace Waw {
 
-	Window::Window(HINSTANCE hInstance, int nCmdShow, LRESULT(CALLBACK* wndProc)(HWND, UINT, WPARAM, LPARAM)) {
-		wcex.cbSize = sizeof(WNDCLASSEX);
-        wcex.style = CS_HREDRAW | CS_VREDRAW;
-		wcex.lpfnWndProc = wndProc;
-		wcex.cbClsExtra = 0;
-		wcex.cbWndExtra = 0;
-		wcex.hInstance = hInstance;
-		wcex.hIcon = NULL;
-		wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-		wcex.hbrBackground = NULL;
-		wcex.lpszMenuName = NULL;
-		wcex.lpszClassName = L"Waw Window";
-		wcex.hIconSm = NULL;
+	Window::Window(HINSTANCE hInstance, int nCmdShow, const char* wndName) {
+		WNDCLASSEX wc = { 0 };
+		const auto className = "WawWindow";
+		wc.cbSize = sizeof(WNDCLASSEX);
+        wc.style = CS_HREDRAW | CS_VREDRAW;
+		wc.lpfnWndProc = WinProc;
+		wc.cbClsExtra = 0;
+		wc.cbWndExtra = 0;
+		wc.hInstance = hInstance;
+		wc.hIcon = nullptr;
+		wc.hCursor = nullptr;
+		wc.hbrBackground = nullptr;
+		wc.lpszMenuName = nullptr;
+		wc.lpszClassName = className;
+		wc.hIconSm = NULL;
 
-		RegisterClassExW(&wcex);
+		RegisterClassEx(&wc);
 
-		hWindow = CreateWindowW(L"Waw Window", L"Waw Window", WS_OVERLAPPEDWINDOW, 0, 0, 800, 600, nullptr, nullptr, hInstance, nullptr);
+		hWindow = CreateWindowEx(0, className, 
+								 wndName, WS_OVERLAPPEDWINDOW, 
+								 100, 100, 800, 600, 
+								 nullptr, nullptr, 
+								 hInstance, nullptr
+		);
 
 		ShowWindow(hWindow, nCmdShow);
 	}
 
-	Window::Window(HINSTANCE hInstance, int nCmdShow, LRESULT (*wndProc)(HWND, UINT, WPARAM, LPARAM), int widht, int height) {
-		wcex.cbSize = sizeof(WNDCLASSEX);
-		wcex.style = CS_HREDRAW | CS_VREDRAW;
-		wcex.lpfnWndProc = wndProc;
-		wcex.cbClsExtra = 0;
-		wcex.cbWndExtra = 0;
-		wcex.hInstance = hInstance;
-		wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WAW));
-		wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-		wcex.hbrBackground = NULL;
-		wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_WAW);
-		wcex.lpszClassName = L"Waw Window";
-		wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+	Window::Window(HINSTANCE hInstance, int nCmdShow, int width, int height, const char* wndName) {
+		WNDCLASSEX wc = { 0 };
+		const auto className = "WawWindow";
+		wc.cbSize = sizeof(WNDCLASSEX);
+		wc.style = CS_HREDRAW | CS_VREDRAW;
+		wc.lpfnWndProc = WinProc;
+		wc.cbClsExtra = 0;
+		wc.cbWndExtra = 0;
+		wc.hInstance = hInstance;
+		wc.hIcon = nullptr;
+		wc.hCursor = nullptr;
+		wc.hbrBackground = nullptr;
+		wc.lpszMenuName = nullptr;
+		wc.lpszClassName = className;
+		wc.hIconSm = NULL;
 
-		RegisterClassExW(&wcex);
+		RegisterClassEx(&wc);
 
-		hWindow = CreateWindowW(L"Waw Window", L"Waw Window", WS_OVERLAPPEDWINDOW, 0, 0, widht, height, nullptr, nullptr, hInstance, nullptr);
-		
+		hWindow = CreateWindowEx(0, className,
+								 wndName, WS_OVERLAPPEDWINDOW,
+								 100, 100, width, height,
+								 nullptr, nullptr,
+								 hInstance, nullptr);
+
 		ShowWindow(hWindow, nCmdShow);
 	}
 
 	void Window::SetWindowSize(int widht, int height) {
-		SetWindowPos(hWindow, nullptr, 0, 0, widht, height, SWP_SHOWWINDOW);
+		SetWindowPos(hWindow, nullptr, 100, 100, widht, height, SWP_SHOWWINDOW);
 	}
 
 }

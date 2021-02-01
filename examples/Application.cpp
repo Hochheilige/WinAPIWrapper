@@ -16,38 +16,26 @@ using container_type = std::vector<
 
 HINSTANCE hInst;
 
-LRESULT WINAPI WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR pCmdLine, int nCmdShow) {
+int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR pCmdLine, int nCmdShow) {
 	hInst = hInstance;
-	Window window(hInst, nCmdShow, WinProc);
+	Window window(hInst, nCmdShow, "Waw Example Window");
 
-	HACCEL hAccelTable = LoadAccelerators(hInst, MAKEINTRESOURCE(IDC_WAW));
+	//HACCEL hAccelTable = LoadAccelerators(hInst, MAKEINTRESOURCE(IDC_WAW));
 	MSG msg;
-
-	while (GetMessage(&msg, nullptr, 0, 0)) {
-		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) {
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
+	BOOL result;
+	while (result = GetMessage(&msg, nullptr, 0, 0)) {
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
 	}
+
+	if (result == -1)
+		return result;
+	else
+		return msg.wParam;
 }
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	switch (message) {
-		case WM_COMMAND: {
-			int wmId = LOWORD(wParam);
-			switch (wmId) {
-				case IDM_ABOUT:
-					DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, NULL);
-					break;
-				case IDM_EXIT:
-					DestroyWindow(hWnd);
-					break;
-				default:
-					return DefWindowProc(hWnd, message, wParam, lParam);
-			}
-		} break;
 		case WM_PAINT: {
 			PAINTSTRUCT ps;
 			HDC hdc = BeginPaint(hWnd, &ps);
@@ -101,9 +89,10 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 			EndPaint(hWnd, &ps);
 		} break;
-		case WM_DESTROY:
+		case WM_DESTROY: {
 			PostQuitMessage(0);
 			break;
+		}
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
 	}

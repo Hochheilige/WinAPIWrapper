@@ -2,21 +2,23 @@
 
 #include <Windows.h>
 
-LRESULT WINAPI WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-
 namespace Waw {
 
 	class Window {
 	public:
-		Window(HINSTANCE hInstance, int nCmdShow, const char* wndName);
+		Window(HINSTANCE hInstance, LRESULT (*WinProc)(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam));
 
-		Window(HINSTANCE hInstance, int nCmdShow, int widht, int height, const char* wndName);
+		bool CreateWawWindow(HINSTANCE hInstance, int nCmdShow, const char* wndName);
 
-		void SetWindowSize(int widht, int height);
+		bool CreateWawWindow(HINSTANCE hInstance, int nCmdShow, int width, int height, const char* wndName);
+
+		void SetWindowSize(int width, int height);
 
 		inline HWND GetWindow() { return hWindow; }
 	private:
 		HWND hWindow;
+		WNDCLASSEX wc = { 0 };
+		const char* className = "WawWindow";
 	};
 
 }

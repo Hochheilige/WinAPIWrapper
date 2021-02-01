@@ -14,8 +14,11 @@ using container_type = std::vector<
 	Figures<Triangle, Rect, Circle>
 >;
 
+LRESULT WINAPI WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR pCmdLine, int nCmdShow) {
-	Window window(hInstance, nCmdShow, "Waw Example Window");
+	Window window(hInstance, WinProc);
+	window.CreateWawWindow(hInstance, nCmdShow, "Waw Example Window");
 
 	MSG msg;
 	BOOL result;

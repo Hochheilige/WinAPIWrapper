@@ -14,13 +14,9 @@ using container_type = std::vector<
 	Figures<Triangle, Rect, Circle>
 >;
 
-HINSTANCE hInst;
-
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR pCmdLine, int nCmdShow) {
-	hInst = hInstance;
-	Window window(hInst, nCmdShow, "Waw Example Window");
+	Window window(hInstance, nCmdShow, "Waw Example Window");
 
-	//HACCEL hAccelTable = LoadAccelerators(hInst, MAKEINTRESOURCE(IDC_WAW));
 	MSG msg;
 	BOOL result;
 	while (result = GetMessage(&msg, nullptr, 0, 0)) {

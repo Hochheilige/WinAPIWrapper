@@ -4,7 +4,6 @@ option(BUILD_AS_SHARED_LIB "Build Waw as shared library" OFF)
 option(BUILD_AS_STATIC_LIB "Build Waw as static library" OFF)
 option(BUILD_EXAMPLE "Build Waw example program" OFF)
 
-
 if(BUILD_EXAMPLE)
     message("-- Build Waw example program")
     project(WawExample LANGUAGES CXX)

@@ -28,5 +28,13 @@ if(BUILD_EXAMPLE)
 else()
     project(Wawlib LANGUAGES CXX)
     add_subdirectory(src)
+
+    target_include_directories(WinAPIWrapper
+	    PUBLIC include/  
+    )
+
+    target_link_directories(WinAPIWrapper
+	    PUBLIC include/
+    )
 endif()
 

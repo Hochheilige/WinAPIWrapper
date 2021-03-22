@@ -23,7 +23,7 @@ Another way - using simple CMake commands in project directory:
 ```
 cmake -S .. -B ../out/build/
 cmake --build ../out/build
-cd ../out/build/examplesDebug
+cd ../out/build/examples/Debug
 WawExample.exe
 ```
 

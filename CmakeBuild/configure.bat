@@ -1,1 +1,6 @@
-cmake -S .. -B ../out/build/ -DBUILD_EXAMPLE=ON -DBUILD_AS_STATIC_LIB
+cd ../
+mkdir out
+cd out
+mkdir build
+cd ../CMakeBuild
+cmake -S .. -B ../out/build/ -DBUILD_EXAMPLE=ON

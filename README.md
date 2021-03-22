@@ -1,5 +1,6 @@
 # WinAPIWrapper
-Simple OOP Wrapper under WinAPI to draw simple figures like Triangles, Rectangles and Circles.
+Simple OOP Wrapper under WinAPI to draw simple figures like Triangles, Rectangles and Circles. 
+Feature of this library - static polymorphism, using CRTP (Curiously recurring template pattern)
 
 ## Getting Started
 
@@ -13,16 +14,16 @@ To generate, build and run this project you should have CMake installed and use 
 
 To run the example you just can sequentially run files in CMakeBuilds directory:
 
-1. configure.bat - to generate configuretion to the project
+1. configure.bat - to generate configuration to the project
 2. build.bat - to build the project
 3. run.bat - to run the project
 
-Another way - using simple CMake commands:
+Another way - using simple CMake commands in project directory:
 
 ```
 cmake -S .. -B ../out/build/
 cmake --build ../out/build
-cd ../out/build/Debug
+cd ../out/build/examplesDebug
 WawExample.exe
 ```
 

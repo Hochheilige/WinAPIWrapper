@@ -1,6 +1,6 @@
 # WinAPIWrapper
 Simple OOP Wrapper under WinAPI to draw simple figures like Triangles, Rectangles and Circles. 
-Feature of this library - static polymorphism, using CRTP (Curiously recurring template pattern)
+Main feature of this library - static polymorphism, using CRTP (Curiously recurring template pattern)
 
 ## Getting Started
 
